@@ -11,7 +11,7 @@ package udistrital.avanzada.parcial.modelo;
  * @version 1.0
  * @since 2025-10-09
  */
-public enum TipoAlimento {
+public enum Alimentacion {
     Lácteos,
     Carnes,
     Verduras,

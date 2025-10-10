@@ -3,7 +3,7 @@ package udistrital.avanzada.parcial.control;
 import java.util.List;
 //Importar clases desde otros paquetes
 import udistrital.avanzada.parcial.modelo.DAO.AnimalDAO;
-import udistrital.avanzada.parcial.modelo.Mascota;
+import udistrital.avanzada.parcial.modelo.MascotaVO;
 
 /**
  * Clase ControlLogica que controla todo el aplicativo
