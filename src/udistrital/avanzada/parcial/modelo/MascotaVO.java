@@ -3,24 +3,25 @@ package udistrital.avanzada.parcial.modelo;
 /**
  * Clase Mascota que extiende de Animal e incluye atributos adicionales
  * específicos para una mascota, como apodo y tipo de alimentación.
- * 
- * <p>Esta clase representa a una mascota exótica con características
- * generales heredadas de Animal y propiedades propias para su identificación
- * y cuidado.</p>
- * 
+ *
+ * <p>
+ * Esta clase representa a una mascota exótica con características generales
+ * heredadas de AnimalVO y propiedades propias para su identificación y
+ * cuidado.</p>
+ *
  * @author Paula Martinez
  * @version 1.0
  * @since 2025-10-09
  */
-public class Mascota extends Animal {
-    
+public class MascotaVO extends AnimalVO {
+
     private String apodo;
-    private String alimentacion;
+    private Alimentacion alimentacion;
 
     /**
-     * Constructor para crear una Mascota con sus atributos específicos y
-     * las propiedades heredadas de la clase Animal.
-     * 
+     * Constructor para crear una Mascota con sus atributos específicos y las
+     * propiedades heredadas de la clase AnimalVO.
+     *
      * @param apodo nombre coloquial o apodo de la mascota
      * @param alimentacion tipo o dieta de alimentación de la mascota
      * @param nombre nombre común del animal
@@ -29,7 +30,7 @@ public class Mascota extends Animal {
      * @param genero género taxonómico del animal
      * @param especie especie específica del animal
      */
-    public Mascota(String apodo, String alimentacion, String nombre, String clasificacion, String familia, String genero, String especie) {
+    public MascotaVO(String apodo, Alimentacion alimentacion, String nombre, Clasificacion clasificacion, String familia, String genero, String especie) {
         super(nombre, clasificacion, familia, genero, especie);
         this.apodo = apodo;
         this.alimentacion = alimentacion;
@@ -37,7 +38,7 @@ public class Mascota extends Animal {
 
     /**
      * Obtiene el apodo o nombre coloquial de la mascota.
-     * 
+     *
      * @return el apodo de la mascota
      */
     public String getApodo() {
@@ -46,7 +47,7 @@ public class Mascota extends Animal {
 
     /**
      * Modifica el apodo o nombre coloquial de la mascota.
-     * 
+     *
      * @param apodo nuevo apodo para la mascota
      */
     public void setApodo(String apodo) {
@@ -55,24 +56,24 @@ public class Mascota extends Animal {
 
     /**
      * Obtiene el tipo o dieta de alimentación de la mascota.
-     * 
+     *
      * @return la alimentación de la mascota
      */
-    public String getAlimentacion() {
+    public Alimentacion getAlimentacion() {
         return alimentacion;
     }
 
     /**
      * Modifica el tipo o dieta de alimentación de la mascota.
-     * 
+     *
      * @param alimentacion nueva alimentación para la mascota
      */
-    public void setAlimentacion(String alimentacion) {
+    public void setAlimentacion(Alimentacion alimentacion) {
         this.alimentacion = alimentacion;
     }
-    
+
     @Override
-    public String getDescripcion(){
-        return "Maldito Bravo";
+    public String getDescripcion() {
+        return "";
     }
 }

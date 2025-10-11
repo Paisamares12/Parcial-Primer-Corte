@@ -10,10 +10,10 @@ package udistrital.avanzada.parcial.modelo;
  * @version 1.0
  * @since 2025-10-09
  */
-public abstract class Animal {
+public abstract class AnimalVO {
     
     private String nombre;
-    private String clasificacion;
+    private Clasificacion clasificacion;
     private String familia;
     private String genero;
     private String especie;
@@ -27,7 +27,7 @@ public abstract class Animal {
      * @param genero género taxonómico del animal
      * @param especie especie específica del animal
      */
-    public Animal(String nombre, String clasificacion, String familia, String genero, String especie) {
+    public AnimalVO(String nombre, Clasificacion clasificacion, String familia, String genero, String especie) {
         this.nombre = nombre;
         this.clasificacion = clasificacion;
         this.familia = familia;
@@ -40,7 +40,7 @@ public abstract class Animal {
      * 
      * @return la clasificación taxonómica del animal
      */
-    public String getClasificacion() {
+    public Clasificacion getClasificacion() {
         return clasificacion;
     }
 
@@ -49,7 +49,7 @@ public abstract class Animal {
      * 
      * @param clasificacion nueva clasificación taxonómica
      */
-    public void setClasificacion(String clasificacion) {
+    public void setClasificacion(Clasificacion clasificacion) {
         this.clasificacion = clasificacion;
     }
 
