@@ -12,12 +12,12 @@ package udistrital.avanzada.parcial.modelo;
  * @since 2025-10-09
  */
 public enum Alimentacion {
-    Lácteos,
+    Lacteos,
     Carnes,
     Verduras,
     Frutas,
     Forrajes,
     Cereales,
     Leguminosas,
-    Omnívoros
+    Omnivoros
 }

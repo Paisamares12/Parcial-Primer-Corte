@@ -110,7 +110,7 @@ public class AnimalDAO {
      * @return un objeto {@link AnimalVO} que representa la mascota encontrada,
      * o {@code null} si no existe una coincidencia en la base de datos.
      */
-    public AnimalVO consultarAnimalClasificacion(String clasificacion) {
+    public AnimalVO consultarAnimalClasificacion(Clasificacion clasificacion) {
         // Objeto que almacenará el resultado de la consulta
         AnimalVO animal = null;
         // Consulta SQL para buscar el animal según la clasificaci[on

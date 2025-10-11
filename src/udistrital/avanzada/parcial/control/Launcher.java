@@ -15,13 +15,13 @@ package udistrital.avanzada.parcial.control;
  * @since 2025-10-09
  */
 public class Launcher {
-
-    /**
-     * Método principal que se ejecuta al iniciar el programa.
-     * 
-     * @param args argumentos de línea de comandos (no utilizados)
-     */
-    public static void main(String[] args) {
-        new ControlLogica();
-    }
+//
+//    /**
+//     * Método principal que se ejecuta al iniciar el programa.
+//     * 
+//     * @param args argumentos de línea de comandos (no utilizados)
+//     */
+//    public static void main(String[] args) {
+//        new ControlLogica();
+//    }
 }

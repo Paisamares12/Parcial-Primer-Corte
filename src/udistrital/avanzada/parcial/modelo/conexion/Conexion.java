@@ -36,7 +36,7 @@ public class Conexion {
     //Se inicia la variable static cn nula para asi hacer uso del singleton
     private static Connection cn = null;
     //La url a la base de datos
-    private static String URLBD = "jdcv:mysql://localhost/";
+    private static String URLBD = "jdbc:mysql://localhost:3307/";
     //Usuarios y contraseña para conectar facilmente a la base de datos
     private static String usuario = "root";
     private static String contrasena = "";
