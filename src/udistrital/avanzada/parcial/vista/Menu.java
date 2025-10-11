@@ -104,10 +104,10 @@ public class Menu extends javax.swing.JPanel {
         botonLimpiar = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(23, 97, 235));
+        setBackground(new java.awt.Color(2, 68, 129));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        botonInicio.setBackground(new java.awt.Color(23, 97, 235));
+        botonInicio.setBackground(new java.awt.Color(2, 68, 129));
         botonInicio.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonInicio.setForeground(new java.awt.Color(255, 255, 255));
         botonInicio.setText("Inicio\n");
@@ -115,61 +115,61 @@ public class Menu extends javax.swing.JPanel {
         botonInicio.setBorder(null);
         add(botonInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 230, 70));
 
-        botonAdicionar.setBackground(new java.awt.Color(23, 97, 235));
+        botonAdicionar.setBackground(new java.awt.Color(2, 68, 129));
         botonAdicionar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonAdicionar.setForeground(new java.awt.Color(255, 255, 255));
         botonAdicionar.setText("Adicionar");
         botonAdicionar.setToolTipText("");
         botonAdicionar.setBorder(null);
-        add(botonAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 108, 230, 70));
+        add(botonAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, 70));
 
-        botonConsultar.setBackground(new java.awt.Color(23, 97, 235));
+        botonConsultar.setBackground(new java.awt.Color(2, 68, 129));
         botonConsultar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonConsultar.setForeground(new java.awt.Color(255, 255, 255));
         botonConsultar.setText("Consultar");
         botonConsultar.setToolTipText("");
         botonConsultar.setBorder(null);
-        add(botonConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 178, 230, 70));
+        add(botonConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 230, 70));
 
-        botonEliminar.setBackground(new java.awt.Color(23, 97, 235));
+        botonEliminar.setBackground(new java.awt.Color(2, 68, 129));
         botonEliminar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonEliminar.setForeground(new java.awt.Color(255, 255, 255));
         botonEliminar.setText("Eliminar");
         botonEliminar.setToolTipText("");
         botonEliminar.setBorder(null);
-        add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 248, 230, 70));
+        add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 230, 70));
 
-        botonModificar.setBackground(new java.awt.Color(23, 97, 235));
+        botonModificar.setBackground(new java.awt.Color(2, 68, 129));
         botonModificar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonModificar.setForeground(new java.awt.Color(255, 255, 255));
         botonModificar.setText("Modificar");
         botonModificar.setToolTipText("");
         botonModificar.setBorder(null);
-        add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 318, 230, 70));
+        add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 230, 70));
 
-        botonSerializar.setBackground(new java.awt.Color(23, 97, 235));
+        botonSerializar.setBackground(new java.awt.Color(2, 68, 129));
         botonSerializar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonSerializar.setForeground(new java.awt.Color(255, 255, 255));
         botonSerializar.setText("Serializar");
         botonSerializar.setToolTipText("");
         botonSerializar.setBorder(null);
-        add(botonSerializar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 388, 230, 70));
+        add(botonSerializar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 230, 70));
 
-        botonLimpiar.setBackground(new java.awt.Color(23, 97, 235));
+        botonLimpiar.setBackground(new java.awt.Color(2, 68, 129));
         botonLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         botonLimpiar.setText("Limpiar");
         botonLimpiar.setToolTipText("");
         botonLimpiar.setBorder(null);
-        add(botonLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 458, 230, 70));
+        add(botonLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 230, 70));
 
-        botonSalir.setBackground(new java.awt.Color(23, 97, 235));
+        botonSalir.setBackground(new java.awt.Color(2, 68, 129));
         botonSalir.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonSalir.setForeground(new java.awt.Color(255, 0, 0));
         botonSalir.setText("Salir");
         botonSalir.setToolTipText("");
         botonSalir.setBorder(null);
-        add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 528, 230, 70));
+        add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 230, 70));
     }// </editor-fold>//GEN-END:initComponents
 
 

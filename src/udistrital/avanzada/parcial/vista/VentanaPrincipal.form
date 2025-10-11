@@ -33,9 +33,9 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JLayeredPane" name="bg">
+    <Container class="javax.swing.JPanel" name="bg">
       <Properties>
-        <Property name="opaque" type="boolean" value="true"/>
+        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
 
       <Layout>

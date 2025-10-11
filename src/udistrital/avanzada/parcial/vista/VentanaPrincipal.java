@@ -1,5 +1,9 @@
 package udistrital.avanzada.parcial.vista;
 
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import udistrital.avanzada.parcial.control.ControlInterfaz;
 
 import net.miginfocom.swing.MigLayout;
@@ -35,6 +39,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         bg.add(menu,"w 230!, spany 2");
         bg.add(header, "h 50!, wrap");
         bg.add(main, "w 100%, h 100%");
+        setContentPane(bg); 
         this.setLocationRelativeTo(null);
     }
     /**
@@ -43,6 +48,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public Menu getPanelMenu() {
         return menu;
+    }
+    /**
+     * Permite acceder al panel de menú desde otras clases.
+     * @return el panel de menú que contiene los botones principales
+     */
+    public MainForm getPanelMain() {
+        return main;
+    }
+    
+    private void SetImageLabel(JLabel labelName, String root){
+        ImageIcon image = new ImageIcon(root);
+        Icon icon = new ImageIcon(
+                image.getImage().getScaledInstance(labelName.getWidth(),
+                        labelName.getHeight(), Image.SCALE_DEFAULT)
+        );
+        labelName.setIcon(icon);
+        this.repaint();
+        
     }
     
     /**
@@ -54,11 +77,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bg = new javax.swing.JLayeredPane();
+        bg = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        bg.setOpaque(true);
+        bg.setOpaque(false);
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
@@ -75,17 +98,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLayeredPane bg;
+    private javax.swing.JPanel bg;
     // End of variables declaration//GEN-END:variables
 }
