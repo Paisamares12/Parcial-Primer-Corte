@@ -1,278 +1,134 @@
-package udistrital.avanzada.parcial.modelo.DAO;
-//Importaciones de librerias
+package udistrital.avanzada.parcial.modelo.dao;
 
+// Importaciones de librerías
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
+// Importaciones desde otros paquetes
 import udistrital.avanzada.parcial.modelo.Alimentacion;
-//Importanciones desde otros paquetes
 import udistrital.avanzada.parcial.modelo.AnimalVO;
 import udistrital.avanzada.parcial.modelo.Clasificacion;
 import udistrital.avanzada.parcial.modelo.MascotaVO;
 import udistrital.avanzada.parcial.modelo.conexion.Conexion;
 
 /**
- * Clase AnimalDAO daojeje
- *
+ * Clase AnimalDAO
+ * <p>
+ * Gestiona las operaciones de consulta en la base de datos relacionadas con los
+ * animales y mascotas. Implementa la capa de persistencia siguiendo el patrón DAO
+ * y aplica el Principio de Sustitución de Liskov devolviendo objetos tipo
+ * {@link AnimalVO}.
+ * </p>
+ * 
+ * <p>
+ * <b>Mejoras realizadas:</b><br>
+ * - Uso de PreparedStatement para evitar inyección SQL.<br>
+ * - Método privado reutilizable para crear objetos {@code MascotaVO}.<br>
+ * - Cierre seguro de recursos JDBC.<br>
+ * </p>
+ * 
+ * Originalmente creada por Paula Martínez.<br>
+ * Modificada y optimizada por Juan Sebastián Bravo Rojas.
+ * 
  * @author Paula Martínez
- * @version 1.0
- * @since 2025-10-09
+ * @version 2.0
+ * @since 2025-10-13
  */
 public class AnimalDAO {
 
-    private Connection con;
-    private Statement st;
-    private ResultSet rs;
-
-    private static String mensaje;
-
-    public AnimalDAO() {
-        con = null;
-        st = null;
-        rs = null;
-    }
-
     /**
      * Consulta un animal en la base de datos a partir de su apodo.
-     * <p>
-     * Este método busca en la tabla <strong>Animales</strong> un registro que
-     * coincida con el apodo especificado. Si se encuentra una coincidencia, se
-     * crea un objeto {@link MascotaVO} con los datos obtenidos de la base de
-     * datos y se devuelve como tipo {@link AnimalVO}, respetando el principio
-     * de sustitución de Liskov.
-     * </p>
      *
-     * <p>
-     * En caso de que ocurra una excepción durante la consulta, se asigna un
-     * mensaje de error a la variable {@code mensaje}.
-     * </p>
-     *
-     * @param apodo el apodo de la mascota a consultar.
-     * @return un objeto {@link AnimalVO} que representa la mascota encontrada,
-     * o {@code null} si no existe una coincidencia en la base de datos.
+     * @param apodo Apodo de la mascota a consultar.
+     * @return Objeto {@link AnimalVO} encontrado o {@code null} si no existe.
      */
     public AnimalVO consultarAnimalApodo(String apodo) {
-        // Objeto que almacenará el resultado de la consulta
-        AnimalVO animal = null;
-        // Consulta SQL para buscar el animal según el apodo
-        String consulta = "SELECT * FROM Animales where apodo='" + apodo + "'";
-        try {
-            // Obtiene la conexión desde la clase Conexion
-            con = (Connection) Conexion.getConexion();
-            // Crea un Statement para ejecutar la consulta SQL
-            st = con.createStatement();
-            // Ejecuta la consulta y almacena el resultado en ResultSet
-            rs = st.executeQuery(consulta);
-            // Si hay al menos un resultado, crea un objeto MascotaVO con los datos obtenidos
-            if (rs.next()) {
-                // 🔹 Conversión del texto de la BD al tipo enum Alimentacion y Clasificaicon
-                Alimentacion tipoAlimentacion = Alimentacion.valueOf(rs.getString("alimentacion"));
-                Clasificacion clasificacion = Clasificacion.valueOf(rs.getString("clasificacion"));
-                animal = new MascotaVO(
-                        rs.getString("apodo"),
-                        tipoAlimentacion,
-                        rs.getString("nombre"),
-                        clasificacion,
-                        rs.getString("familia"),
-                        rs.getString("genero"),
-                        rs.getString("especie")
-                );
-            }
-            // Cierra el Statement para liberar recursos
-            st.close();
-            // Desconecta la base de datos mediante el método estático de Conexion
-            Conexion.desconectar();
-        } catch (SQLException ex) {
-            // Si ocurre un error durante la consulta, guarda un mensaje descriptivo
-            mensaje = "No se pudo realizar la consulta";
-        }
-        // Devuelve el objeto AnimalVO (MascotaVO) o null si no se encontró
-        return animal;
+        String sql = "SELECT * FROM Animales WHERE apodo = ?";
+        return ejecutarConsulta(sql, apodo);
     }
 
     /**
-     * Consulta un animal en la base de datos a partir de su clasificaci[on.
-     * <p>
-     * Este método busca en la tabla <strong>Animales</strong> un registro que
-     * coincida con la clasificaci[on especificada. Si se encuentra una
-     * coincidencia, se crea un objeto {@link MascotaVO} con los datos obtenidos
-     * de la base de datos y se devuelve como tipo {@link AnimalVO}, respetando
-     * el principio de sustitución de Liskov.
-     * </p>
+     * Consulta un animal en la base de datos a partir de su clasificación.
      *
-     * <p>
-     * En caso de que ocurra una excepción durante la consulta, se asigna un
-     * mensaje de error a la variable {@code mensaje}.
-     * </p>
-     *
-     * @param clasificacion la clasificacion de la mascota a consultar.
-     * @return un objeto {@link AnimalVO} que representa la mascota encontrada,
-     * o {@code null} si no existe una coincidencia en la base de datos.
+     * @param clasificacion Clasificación taxonómica de la mascota.
+     * @return Objeto {@link AnimalVO} encontrado o {@code null} si no existe.
      */
     public AnimalVO consultarAnimalClasificacion(Clasificacion clasificacion) {
-        // Objeto que almacenará el resultado de la consulta
-        AnimalVO animal = null;
-        // Consulta SQL para buscar el animal según la clasificaci[on
-        String consulta = "SELECT * FROM Animales where clasificacion='" + clasificacion + "'";
-        try {
-            // Obtiene la conexión desde la clase Conexion
-            con = (Connection) Conexion.getConexion();
-            // Crea un Statement para ejecutar la consulta SQL
-            st = con.createStatement();
-            // Ejecuta la consulta y almacena el resultado en ResultSet
-            rs = st.executeQuery(consulta);
-            // Si hay al menos un resultado, crea un objeto MascotaVO con los datos obtenidos
-            if (rs.next()) {
-                // 🔹 Conversión del texto de la BD al tipo enum Alimentacion y Clasificaicon
-                Alimentacion tipoAlimentacion = Alimentacion.valueOf(rs.getString("alimentacion"));
-                Clasificacion tipoClasificacion = Clasificacion.valueOf(rs.getString("clasificacion"));
-                animal = new MascotaVO(
-                        rs.getString("apodo"),
-                        tipoAlimentacion,
-                        rs.getString("nombre"),
-                        tipoClasificacion,
-                        rs.getString("familia"),
-                        rs.getString("genero"),
-                        rs.getString("especie")
-                );
-            }
-            // Cierra el Statement para liberar recursos
-            st.close();
-            // Desconecta la base de datos mediante el método estático de Conexion
-            Conexion.desconectar();
-        } catch (SQLException ex) {
-            // Si ocurre un error durante la consulta, guarda un mensaje descriptivo
-            mensaje = "No se pudo realizar la consulta";
-        }
-        // Devuelve el objeto AnimalVO (MascotaVO) o null si no se encontró
-        return animal;
+        String sql = "SELECT * FROM Animales WHERE clasificacion = ?";
+        return ejecutarConsulta(sql, clasificacion.name());
     }
 
     /**
      * Consulta un animal en la base de datos a partir de su familia.
-     * <p>
-     * Este método busca en la tabla <strong>Animales</strong> un registro que
-     * coincida con la familia especificada. Si se encuentra una coincidencia,
-     * se crea un objeto {@link MascotaVO} con los datos obtenidos de la base de
-     * datos y se devuelve como tipo {@link AnimalVO}, respetando el principio
-     * de sustitución de Liskov.
-     * </p>
      *
-     * <p>
-     * En caso de que ocurra una excepción durante la consulta, se asigna un
-     * mensaje de error a la variable {@code mensaje}.
-     * </p>
-     *
-     * @param familia la familia de la mascota a consultar.
-     * @return un objeto {@link AnimalVO} que representa la mascota encontrada,
-     * o {@code null} si no existe una coincidencia en la base de datos.
+     * @param familia Familia taxonómica de la mascota.
+     * @return Objeto {@link AnimalVO} encontrado o {@code null} si no existe.
      */
     public AnimalVO consultarAnimalFamilia(String familia) {
-        // Objeto que almacenará el resultado de la consulta
-        AnimalVO animal = null;
-        // Consulta SQL para buscar el animal según la familia
-        String consulta = "SELECT * FROM Animales where familia='" + familia + "'";
-        try {
-            // Obtiene la conexión desde la clase Conexion
-            con = (Connection) Conexion.getConexion();
-            // Crea un Statement para ejecutar la consulta SQL
-            st = con.createStatement();
-            // Ejecuta la consulta y almacena el resultado en ResultSet
-            rs = st.executeQuery(consulta);
-            // Si hay al menos un resultado, crea un objeto MascotaVO con los datos obtenidos
-            if (rs.next()) {
-                // 🔹 Conversión del texto de la BD al tipo enum Alimentacion y Clasificaicon
-                Alimentacion tipoAlimentacion = Alimentacion.valueOf(rs.getString("alimentacion"));
-                Clasificacion clasificacion = Clasificacion.valueOf(rs.getString("clasificacion"));
-                animal = new MascotaVO(
-                        rs.getString("apodo"),
-                        tipoAlimentacion,
-                        rs.getString("nombre"),
-                        clasificacion,
-                        rs.getString("familia"),
-                        rs.getString("genero"),
-                        rs.getString("especie")
-                );
-            }
-            // Cierra el Statement para liberar recursos
-            st.close();
-            // Desconecta la base de datos mediante el método estático de Conexion
-            Conexion.desconectar();
-        } catch (SQLException ex) {
-            // Si ocurre un error durante la consulta, guarda un mensaje descriptivo
-            mensaje = "No se pudo realizar la consulta";
-        }
-        // Devuelve el objeto AnimalVO (MascotaVO) o null si no se encontró
-        return animal;
+        String sql = "SELECT * FROM Animales WHERE familia = ?";
+        return ejecutarConsulta(sql, familia);
     }
 
     /**
-     * Consulta un animal en la base de datos a partir de su tipo de
-     * alimentacion.
-     * <p>
-     * Este método busca en la tabla <strong>Animales</strong> un registro que
-     * coincida con el tipo de alimentación especificado. Si se encuentra una
-     * coincidencia, se crea un objeto {@link MascotaVO} con los datos obtenidos
-     * de la base de datos y se devuelve como tipo {@link AnimalVO}, respetando
-     * el principio de sustitución de Liskov.
-     * </p>
+     * Consulta un animal en la base de datos a partir de su tipo de alimentación.
      *
-     * <p>
-     * En caso de que ocurra una excepción durante la consulta, se asigna un
-     * mensaje de error a la variable {@code mensaje}.
-     * </p>
-     *
-     * @param alimentacion el tipo de alimentación de la mascota a consultar.
-     * @return un objeto {@link AnimalVO} que representa la mascota encontrada,
-     * o {@code null} si no existe una coincidencia en la base de datos.
+     * @param alimentacion Tipo de alimentación de la mascota.
+     * @return Objeto {@link AnimalVO} encontrado o {@code null} si no existe.
      */
     public AnimalVO consultarAnimalAlimentacion(Alimentacion alimentacion) {
-        // Objeto que almacenará el resultado de la consulta
+        String sql = "SELECT * FROM Animales WHERE alimentacion = ?";
+        return ejecutarConsulta(sql, alimentacion.name());
+    }
+
+    /**
+     * Ejecuta una consulta SQL genérica según un parámetro y devuelve un objeto
+     * {@link MascotaVO}.
+     *
+     * @param sql Consulta SQL con un parámetro (WHERE ... = ?)
+     * @param parametro Valor a buscar.
+     * @return Un objeto {@link MascotaVO} o {@code null} si no se encuentra.
+     */
+    private AnimalVO ejecutarConsulta(String sql, String parametro) {
         AnimalVO animal = null;
-        // Consulta SQL para buscar el animal según el apodo
-        String consulta = "SELECT * FROM Animales where alimentacion='" + alimentacion + "'";
-        try {
-            // Obtiene la conexión desde la clase Conexion
-            con = (Connection) Conexion.getConexion();
-            // Crea un Statement para ejecutar la consulta SQL
-            st = con.createStatement();
-            // Ejecuta la consulta y almacena el resultado en ResultSet
-            rs = st.executeQuery(consulta);
-            // Si hay al menos un resultado, crea un objeto MascotaVO con los datos obtenidos
-            if (rs.next()) {
-                // 🔹 Conversión del texto de la BD al tipo enum Alimentacion y Clasificaicon
-                Alimentacion tipoAlimentacion = Alimentacion.valueOf(rs.getString("alimentacion"));
-                Clasificacion clasificacion = Clasificacion.valueOf(rs.getString("clasificacion"));
-                animal = new MascotaVO(
-                        rs.getString("apodo"),
-                        tipoAlimentacion,
-                        rs.getString("nombre"),
-                        clasificacion,
-                        rs.getString("familia"),
-                        rs.getString("genero"),
-                        rs.getString("especie")
-                );
+
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, parametro);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    animal = crearMascota(rs);
+                }
             }
-            // Cierra el Statement para liberar recursos
-            st.close();
-            // Desconecta la base de datos mediante el método estático de Conexion
-            Conexion.desconectar();
-        } catch (SQLException ex) {
-            // Si ocurre un error durante la consulta, guarda un mensaje descriptivo
-            mensaje = "No se pudo realizar la consulta";
+
+        } catch (SQLException e) {
+            System.err.println("Error al consultar animal: " + e.getMessage());
         }
-        // Devuelve el objeto AnimalVO (MascotaVO) o null si no se encontró
+
         return animal;
     }
 
     /**
-     * Devuelve un mensaje cuando se captura alguna excepción
+     * Crea un objeto {@link MascotaVO} a partir de un registro de la base de datos.
      *
-     * @return una cadena de texto para cuando ocurra alguna excepción
+     * @param rs ResultSet con los datos obtenidos de la consulta.
+     * @return Un objeto {@link MascotaVO} con los datos del animal.
+     * @throws SQLException si ocurre un error al leer el ResultSet.
      */
-    public static String getMensaje() {
-        return mensaje;
-    }
+    private MascotaVO crearMascota(ResultSet rs) throws SQLException {
+        Alimentacion tipoAlimentacion = Alimentacion.valueOf(rs.getString("alimentacion"));
+        Clasificacion tipoClasificacion = Clasificacion.valueOf(rs.getString("clasificacion"));
 
+        return new MascotaVO(
+                rs.getString("apodo"),
+                tipoAlimentacion,
+                rs.getString("nombre"),
+                tipoClasificacion,
+                rs.getString("familia"),
+                rs.getString("genero"),
+                rs.getString("especie")
+        );
+    }
 }
