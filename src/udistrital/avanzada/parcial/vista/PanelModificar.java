@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package udistrital.avanzada.parcial.vista;
 
 import javax.swing.JButton;
@@ -10,7 +6,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
- *
+ * Panel para modificar mascotas.
+ * Permite modificar: nombre, clasificación y alimentación.
+ * NO permite modificar: familia, género, especie.
+ * 
  * @author paisa
  */
 public class PanelModificar extends javax.swing.JPanel {
@@ -23,8 +22,8 @@ public class PanelModificar extends javax.swing.JPanel {
         return cajaApodo;
     }
 
-    public JTextField getCajaFamilia() {
-        return cajaFamilia;
+    public JTextField getCajaNombre() {
+        return cajaNombre;
     }
 
     public JComboBox getComboClasificacion() {
@@ -53,12 +52,13 @@ public class PanelModificar extends javax.swing.JPanel {
         tablaAnimales = new javax.swing.JTable();
         lClasificacion = new javax.swing.JLabel();
         comboClasificacion = new javax.swing.JComboBox<>();
-        lFamilia = new javax.swing.JLabel();
-        cajaFamilia = new javax.swing.JTextField();
         lAlimentacion = new javax.swing.JLabel();
         comboAlimentacion = new javax.swing.JComboBox<>();
         botonModificar = new javax.swing.JButton();
         cajaApodo = new javax.swing.JTextField();
+        lNombre = new javax.swing.JLabel();
+        cajaNombre = new javax.swing.JTextField();
+        lInstruccion = new javax.swing.JLabel();
 
         lTitulo.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(2, 68, 129));
@@ -84,9 +84,6 @@ public class PanelModificar extends javax.swing.JPanel {
         lClasificacion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         lClasificacion.setText("Clasificación:");
 
-        lFamilia.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        lFamilia.setText("Familia:");
-
         lAlimentacion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         lAlimentacion.setText("Alimentación:");
 
@@ -98,6 +95,13 @@ public class PanelModificar extends javax.swing.JPanel {
         botonModificar.setText("Modificar");
         botonModificar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 159, 224), null, null));
 
+        lNombre.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        lNombre.setText("Nombre:");
+
+        lInstruccion.setFont(new java.awt.Font("SansSerif", 2, 12)); // NOI18N
+        lInstruccion.setForeground(new java.awt.Color(0, 159, 224));
+        lInstruccion.setText("Seleccione una mascota de la tabla y modifique los campos deseados");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,28 +110,30 @@ public class PanelModificar extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(contenedorTabla)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lApodo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(cajaApodo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(lClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(comboClasificacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(18, 18, 18)
-                            .addComponent(lFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cajaFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(lAlimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(comboAlimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(contenedorTabla, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lApodo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cajaApodo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cajaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboClasificacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lAlimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboAlimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(358, 358, 358)))
+                        .addGap(358, 358, 358))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lInstruccion)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -135,21 +141,23 @@ public class PanelModificar extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(lTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lInstruccion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lApodo)
+                    .addComponent(cajaApodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lNombre)
+                    .addComponent(cajaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lClasificacion)
                     .addComponent(comboClasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lFamilia)
-                    .addComponent(cajaFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lAlimentacion)
-                    .addComponent(comboAlimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cajaApodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboAlimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(contenedorTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(contenedorTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -157,14 +165,15 @@ public class PanelModificar extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonModificar;
     private javax.swing.JTextField cajaApodo;
-    private javax.swing.JTextField cajaFamilia;
+    private javax.swing.JTextField cajaNombre;
     private javax.swing.JComboBox<String> comboAlimentacion;
     private javax.swing.JComboBox<String> comboClasificacion;
     private javax.swing.JScrollPane contenedorTabla;
     private javax.swing.JLabel lAlimentacion;
     private javax.swing.JLabel lApodo;
     private javax.swing.JLabel lClasificacion;
-    private javax.swing.JLabel lFamilia;
+    private javax.swing.JLabel lInstruccion;
+    private javax.swing.JLabel lNombre;
     private javax.swing.JLabel lTitulo;
     private javax.swing.JTable tablaAnimales;
     // End of variables declaration//GEN-END:variables

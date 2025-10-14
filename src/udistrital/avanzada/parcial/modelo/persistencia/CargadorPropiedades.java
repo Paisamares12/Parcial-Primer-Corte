@@ -29,9 +29,9 @@ import udistrital.avanzada.parcial.modelo.MascotaVO;
  * Animal[N]=Nombre,Apodo,Clasificacion,Familia,Genero,Especie,Alimentacion
  * </p>
  * 
- * @author Juan Sebastián Bravo Rojas
- * @version 2.0
- * @since 2025-10-13
+ * @author Juan Estevan Ariza Ortiz
+ * @version 4.0
+ * @since 2025-10-14
  */
 public class CargadorPropiedades {
 

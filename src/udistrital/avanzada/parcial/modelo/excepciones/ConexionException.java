@@ -5,7 +5,7 @@ package udistrital.avanzada.parcial.modelo.excepciones;
  * con la base de datos o con el archivo de persistencia.
  * 
  * @author Juan Sebastián Bravo Rojas
- * @version 2.0
+ * @version 4.0
  * @since 2025-10-13
  */
 public class ConexionException extends Exception {

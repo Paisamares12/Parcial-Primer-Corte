@@ -13,11 +13,12 @@ import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
  * 
  * <p>
  * Originalmente creada por Paula Martínez.<br>
- * Modificada y documentada por Juan Sebastián Bravo Rojas.
+ * Modificada y documentada por Juan Sebastián Bravo Rojas y Juan Ariza
  * </p>
  * 
+ * 
  * @author Paula Martinez
- * @version 2.0
+ * @version 4.0
  * @since 2025-10-13
  */
 public class ControlConexion {

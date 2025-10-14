@@ -1,5 +1,7 @@
 package udistrital.avanzada.parcial.modelo;
 
+import java.io.Serializable;
+
 /**
  * Clase Mascota que extiende de Animal e incluye atributos adicionales
  * específicos para una mascota, como apodo y tipo de alimentación.
@@ -7,16 +9,33 @@ package udistrital.avanzada.parcial.modelo;
  * <p>
  * Esta clase representa a una mascota exótica con características generales
  * heredadas de AnimalVO y propiedades propias para su identificación y
- * cuidado.</p>
+ * cuidado. Implementa Serializable para permitir su persistencia.
+ * </p>
+ * 
+ * <p>
+ * El campo alimentacion se marca como transient para que NO se serialice
+ * cuando se envían los datos al Instituto Distrital de Protección y 
+ * Bienestar Animal (IDPYBA) según los requerimientos.
+ * </p>
+ * 
+ * Modificado y documentado: Juan Ariza
  *
  * @author Paula Martinez
- * @version 1.0
+ * @version 4.0
  * @since 2025-10-09
  */
-public class MascotaVO extends AnimalVO {
+public class MascotaVO extends AnimalVO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String apodo;
-    private Alimentacion alimentacion;
+    
+    /**
+     * Tipo de alimentación de la mascota.
+     * Se marca como transient para que NO se incluya al serializar
+     * (requerimiento para envío al IDPYBA).
+     */
+    private transient Alimentacion alimentacion;
 
     /**
      * Constructor para crear una Mascota con sus atributos específicos y las

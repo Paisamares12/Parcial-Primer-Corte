@@ -1,16 +1,21 @@
 package udistrital.avanzada.parcial.modelo;
 
+import java.io.Serializable;
+
 /**
  * Clase Animal que representa las características básicas de una mascota exótica.
  * 
  * <p>Esta clase incluye atributos como nombre, clasificación, familia, género y especie,
- * y proporciona métodos para acceder y modificar dichos atributos.</p>
+ * y proporciona métodos para acceder y modificar dichos atributos. Implementa Serializable
+ * para permitir la persistencia de objetos.</p>
  * 
  * @author Paula Martínez
  * @version 1.0
  * @since 2025-10-09
  */
-public abstract class AnimalVO {
+public abstract class AnimalVO implements Serializable {
+    
+//    private static final long serialVersionUID = 1L;
     
     private String nombre;
     private Clasificacion clasificacion;
@@ -125,5 +130,10 @@ public abstract class AnimalVO {
         this.nombre = nombre;
     }
     
+    /**
+     * Método abstracto para obtener la descripción del animal.
+     * 
+     * @return descripción del animal
+     */
     public abstract String getDescripcion();
 }

@@ -23,25 +23,19 @@ import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
  * {@link AnimalVO}.
  * </p>
  * 
- * <p>
- * <b>Mejoras realizadas:</b><br>
- * - Uso de PreparedStatement para evitar inyección SQL.<br>
- * - Método privado reutilizable para crear objetos {@code MascotaVO}.<br>
- * - Cierre seguro de recursos JDBC.<br>
- * - Operaciones CRUD completas.<br>
- * </p>
+ * Modificado y documentado: Juan Ariza
  * 
- * Originalmente creada por Paula Martínez.<br>
- * Modificada y optimizada por Juan Sebastián Bravo Rojas.
- * 
- * @author Paula Martínez
- * @version 2.0
- * @since 2025-10-13
+ * @author Juan Ariza
+ * @version 4.0
+ * @since 2025-10-14
  */
 public class AnimalDAO {
 
     private ConexionBD conexionBD;
 
+    /**
+     * Constructor que obtiene la instancia de conexión.
+     */
     public AnimalDAO() {
         this.conexionBD = ConexionBD.getInstance();
     }
@@ -88,6 +82,63 @@ public class AnimalDAO {
     public AnimalVO consultarAnimalAlimentacion(Alimentacion alimentacion) {
         String sql = "SELECT * FROM Animales WHERE alimentacion = ?";
         return ejecutarConsulta(sql, alimentacion.name());
+    }
+
+    /**
+     * Consulta mascotas aplicando múltiples filtros opcionales.
+     * 
+     * @param apodo Apodo a buscar (null o vacío para ignorar)
+     * @param clasificacion Clasificación a buscar (null para ignorar)
+     * @param familia Familia a buscar (null o vacío para ignorar)
+     * @param alimentacion Alimentación a buscar (null para ignorar)
+     * @return Lista de mascotas que cumplen con los filtros
+     * @throws ConexionException si hay error de conexión
+     */
+    public List<MascotaVO> consultarConFiltros(String apodo, Clasificacion clasificacion, 
+                                               String familia, Alimentacion alimentacion) 
+                                               throws ConexionException {
+        List<MascotaVO> resultado = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM Animales WHERE 1=1");
+        List<Object> parametros = new ArrayList<>();
+
+        if (apodo != null && !apodo.trim().isEmpty()) {
+            sql.append(" AND apodo LIKE ?");
+            parametros.add("%" + apodo + "%");
+        }
+
+        if (clasificacion != null) {
+            sql.append(" AND clasificacion = ?");
+            parametros.add(clasificacion.name());
+        }
+
+        if (familia != null && !familia.trim().isEmpty()) {
+            sql.append(" AND familia LIKE ?");
+            parametros.add("%" + familia + "%");
+        }
+
+        if (alimentacion != null) {
+            sql.append(" AND alimentacion = ?");
+            parametros.add(alimentacion.name());
+        }
+
+        try (Connection con = conexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parametros.size(); i++) {
+                ps.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    resultado.add(crearMascota(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ConexionException("Error al consultar con filtros: " + e.getMessage(), e);
+        }
+
+        return resultado;
     }
 
     /**
@@ -141,21 +192,22 @@ public class AnimalDAO {
     }
 
     /**
-     * Actualiza los datos de una mascota (no se puede modificar familia, genero, especie).
+     * Actualiza los datos modificables de una mascota.
+     * Solo permite modificar: nombre, clasificación y alimentación.
      *
      * @param mascota Objeto MascotaVO con los datos actualizados
      * @return true si la actualización fue exitosa
      * @throws ConexionException si ocurre un error de base de datos
      */
     public boolean actualizarMascota(MascotaVO mascota) throws ConexionException {
-        String sql = "UPDATE Animales SET alimentacion = ?, nombre = ?, clasificacion = ? WHERE apodo = ?";
+        String sql = "UPDATE Animales SET nombre = ?, clasificacion = ?, alimentacion = ? WHERE apodo = ?";
         
         try (Connection con = conexionBD.obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
             
-            ps.setString(1, mascota.getAlimentacion().name());
-            ps.setString(2, mascota.getNombre());
-            ps.setString(3, mascota.getClasificacion().name());
+            ps.setString(1, mascota.getNombre());
+            ps.setString(2, mascota.getClasificacion().name());
+            ps.setString(3, mascota.getAlimentacion().name());
             ps.setString(4, mascota.getApodo());
             
             return ps.executeUpdate() > 0;
@@ -247,7 +299,7 @@ public class AnimalDAO {
             }
 
         } catch (Exception e) {
-            System.err.println("Error al consultar animal: " + e.getMessage());
+            // Error manejado internamente
         }
 
         return animal;

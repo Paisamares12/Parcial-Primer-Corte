@@ -1,6 +1,5 @@
 package udistrital.avanzada.parcial.control;
 
-import java.util.ArrayList;
 import java.util.List;
 import udistrital.avanzada.parcial.modelo.MascotaVO;
 import udistrital.avanzada.parcial.modelo.Alimentacion;
@@ -14,12 +13,12 @@ import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
  * Actúa como intermediario entre la lógica principal ({@link ControlLogica})
  * y los objetos del modelo ({@link MascotaVO}). Se encarga de registrar, buscar,
  * eliminar y listar mascotas usando el patrón DAO.
- *
- * Originalmente creada por Paula Martínez.
- * Modificada y documentada por Juan Sebastián Bravo Rojas.
+ * 
+ * Modificado y documentado: Juan Ariza
+ * 
  *
  * @author Paula Martinez
- * @version 2.0
+ * @version 4.0
  * @since 2025-10-13
  */
 public class ControlMascota {
@@ -27,12 +26,15 @@ public class ControlMascota {
     private final AnimalDAO animalDAO;
     private static String mensaje;
 
+    /**
+     * Constructor que inicializa el DAO.
+     */
     public ControlMascota() {
         this.animalDAO = new AnimalDAO();
     }
 
     /**
-     * Retorna los nombres de todas las clasificaciones (para poblar combos).
+     * Retorna los nombres de todas las clasificaciones.
      * @return arreglo de nombres de clasificación
      */
     public String[] getClasificaciones() {
@@ -45,7 +47,7 @@ public class ControlMascota {
     }
 
     /**
-     * Retorna los nombres de todas las alimentaciones (para poblar combos).
+     * Retorna los nombres de todas las alimentaciones.
      * @return arreglo de nombres de alimentaciones
      */
     public String[] getAlimentaciones() {
@@ -79,12 +81,10 @@ public class ControlMascota {
             throw new IllegalArgumentException("Ningún campo puede estar vacío.");
         }
 
-        // Verificar si ya existe una mascota idéntica
         if (animalDAO.existeMascotaCompleta(m)) {
             throw new IllegalArgumentException("Ya existe una mascota con esos datos exactos.");
         }
 
-        // Insertar en la base de datos
         boolean exito = animalDAO.insertarMascota(m);
         
         if (exito) {
@@ -114,6 +114,43 @@ public class ControlMascota {
             return mascota;
         } catch (Exception e) {
             throw new Exception("Error al buscar mascota: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Consulta mascotas aplicando filtros opcionales.
+     * 
+     * @param apodo Apodo a buscar (puede ser null o vacío)
+     * @param clasificacion Clasificación a buscar (puede ser null)
+     * @param familia Familia a buscar (puede ser null o vacío)
+     * @param alimentacion Alimentación a buscar (puede ser null)
+     * @return Lista de mascotas que cumplen con los filtros
+     * @throws Exception si hay error de base de datos
+     */
+    public List<MascotaVO> consultarConFiltros(String apodo, String clasificacion, 
+                                               String familia, String alimentacion) throws Exception {
+        try {
+            Clasificacion clasifEnum = null;
+            if (clasificacion != null && !clasificacion.isEmpty()) {
+                try {
+                    clasifEnum = Clasificacion.valueOf(clasificacion);
+                } catch (IllegalArgumentException e) {
+                    // Si no es válido, se ignora
+                }
+            }
+
+            Alimentacion alimentEnum = null;
+            if (alimentacion != null && !alimentacion.isEmpty()) {
+                try {
+                    alimentEnum = Alimentacion.valueOf(alimentacion);
+                } catch (IllegalArgumentException e) {
+                    // Si no es válido, se ignora
+                }
+            }
+
+            return animalDAO.consultarConFiltros(apodo, clasifEnum, familia, alimentEnum);
+        } catch (ConexionException e) {
+            throw new Exception("Error al consultar con filtros: " + e.getMessage());
         }
     }
 
@@ -155,7 +192,8 @@ public class ControlMascota {
     }
 
     /**
-     * Actualiza los datos de una mascota (no se puede modificar familia, género, especie).
+     * Actualiza los datos modificables de una mascota.
+     * Solo se puede modificar: nombre, clasificación y alimentación.
      *
      * @param mascota Mascota con los datos actualizados
      * @throws Exception si hay error en la actualización
