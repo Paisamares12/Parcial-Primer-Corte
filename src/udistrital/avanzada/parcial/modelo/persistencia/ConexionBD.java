@@ -8,10 +8,8 @@ import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
 /**
  * Clase ConexionBD
  * 
- * Implementa un Singleton que maneja la conexión con la base de datos.
- * 
- * El diseño permite adaptarse fácilmente a distintos motores (MySQL, SQLite, etc.)
- * cambiando solo los valores de URL, usuario y contraseña.
+ * Implementa un Singleton que maneja la conexión con la base de datos MySQL.
+ * Configurada para trabajar con XAMPP.
  * 
  * @author Juan Sebastián Bravo Rojas
  * @version 2.0
@@ -22,20 +20,20 @@ public class ConexionBD {
     private static ConexionBD instancia;
     private Connection conexion;
 
-    // Ajusta estos valores según tu BD real
-    private static final String URL = "jdbc:sqlite:mascotas.db";
-    private static final String USUARIO = "";   // no aplica para SQLite
-    private static final String CLAVE = "";     // no aplica para SQLite
+    private static final String URL = "jdbc:mysql://localhost:3306/mascotas_exoticas";
+    private static final String USUARIO = "root";
+    private static final String CLAVE = "";
 
     /**
      * Constructor privado (patrón Singleton)
      */
     private ConexionBD() throws ConexionException {
         try {
-            // Cargar el driver (SQLite es liviano, pero puedes cambiar a MySQL)
-            Class.forName("org.sqlite.JDBC");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
+            throw new ConexionException("Driver MySQL no encontrado.", e);
+        } catch (SQLException e) {
             throw new ConexionException("Error al conectar con la base de datos.", e);
         }
     }

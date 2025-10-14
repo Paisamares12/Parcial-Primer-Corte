@@ -5,13 +5,15 @@ import java.util.List;
 import udistrital.avanzada.parcial.modelo.MascotaVO;
 import udistrital.avanzada.parcial.modelo.Alimentacion;
 import udistrital.avanzada.parcial.modelo.Clasificacion;
+import udistrital.avanzada.parcial.modelo.dao.AnimalDAO;
+import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
 
 /**
  * Clase que gestiona las operaciones relacionadas con las mascotas.
  *
  * Actúa como intermediario entre la lógica principal ({@link ControlLogica})
  * y los objetos del modelo ({@link MascotaVO}). Se encarga de registrar, buscar,
- * eliminar y listar mascotas.
+ * eliminar y listar mascotas usando el patrón DAO.
  *
  * Originalmente creada por Paula Martínez.
  * Modificada y documentada por Juan Sebastián Bravo Rojas.
@@ -22,23 +24,12 @@ import udistrital.avanzada.parcial.modelo.Clasificacion;
  */
 public class ControlMascota {
 
-    /** Lista que contiene todas las mascotas registradas. */
-    private final ArrayList<MascotaVO> listaMascotas;
-
-    /** Mensaje de estado o error para ser mostrado en la GUI. */
+    private final AnimalDAO animalDAO;
     private static String mensaje;
 
-    /**
-     * Constructor por defecto.
-     * Inicializa la lista de mascotas vacía.
-     */
     public ControlMascota() {
-        listaMascotas = new ArrayList<>();
+        this.animalDAO = new AnimalDAO();
     }
-
-    // ------------------------------
-    // Métodos que ControlLogica espera
-    // ------------------------------
 
     /**
      * Retorna los nombres de todas las clasificaciones (para poblar combos).
@@ -67,112 +58,122 @@ public class ControlMascota {
     }
 
     /**
-     * Registra una nueva mascota a partir de un objeto MascotaVO.
-     * Método compatible con la firma que usa ControlLogica.
+     * Registra una nueva mascota en la base de datos.
      *
-     * @param m MascotaVO con todos sus campos llenos (incluye alimentacion como enum)
-     * @throws Exception si hay validaciones que fallan (apodo duplicado, datos vacíos)
+     * @param m MascotaVO con todos sus campos llenos
+     * @throws Exception si hay validaciones que fallan o error de BD
      */
     public void registrarMascota(MascotaVO m) throws Exception {
-        // Validaciones mínimas reusando tu lógica previa
         if (m == null) {
             throw new IllegalArgumentException("Objeto mascota nulo.");
         }
-        boolean ok = registrarMascota(
-                m.getApodo(),
-                m.getAlimentacion(),
-                m.getNombre(),
-                m.getClasificacion(),
-                m.getFamilia(),
-                m.getGenero(),
-                m.getEspecie()
-        );
 
-        if (!ok) {
-            throw new Exception("No se pudo registrar la mascota: " + getMensaje());
+        if (m.getApodo() == null || m.getApodo().isBlank()) {
+            throw new IllegalArgumentException("El apodo no puede estar vacío.");
         }
-    }
 
-    /**
-     * Devuelve la lista de mascotas como List (compatible con ControlLogica).
-     * @return lista de mascotas
-     */
-    public List<MascotaVO> listarMascotas() {
-        // devolvemos copia para evitar modificaciones externas accidentales
-        return new ArrayList<>(listaMascotas);
-    }
+        if (m.getNombre() == null || m.getNombre().isBlank() ||
+            m.getFamilia() == null || m.getFamilia().isBlank() ||
+            m.getGenero() == null || m.getGenero().isBlank() ||
+            m.getEspecie() == null || m.getEspecie().isBlank()) {
+            throw new IllegalArgumentException("Ningún campo puede estar vacío.");
+        }
 
-    // ------------------------------
-    // Métodos originales / auxiliares
-    // ------------------------------
+        // Verificar si ya existe una mascota idéntica
+        if (animalDAO.existeMascotaCompleta(m)) {
+            throw new IllegalArgumentException("Ya existe una mascota con esos datos exactos.");
+        }
 
-    /**
-     * Registra una nueva mascota en el sistema.
-     * Esta versión recibe campos individuales (útil para la vista).
-     *
-     * @return true si se registró correctamente, false en caso contrario.
-     */
-    public boolean registrarMascota(String apodo, Alimentacion alimentacion, String nombre,
-                                    Clasificacion clasificacion, String familia,
-                                    String genero, String especie) {
-        try {
-            // Validaciones básicas
-            if (apodo == null || apodo.isBlank()) {
-                throw new IllegalArgumentException("El apodo no puede estar vacío.");
-            }
-            if (buscarMascota(apodo) != null) {
-                throw new IllegalArgumentException("Ya existe una mascota con ese apodo.");
-            }
-            if (nombre == null || nombre.isBlank() ||
-                familia == null || familia.isBlank() ||
-                genero == null || genero.isBlank() ||
-                especie == null || especie.isBlank()) {
-                throw new IllegalArgumentException("Ningún campo puede estar vacío.");
-            }
-
-            // Crea el objeto MascotaVO y lo agrega a la lista
-            MascotaVO mascota = new MascotaVO(apodo, alimentacion, nombre, clasificacion, familia, genero, especie);
-            listaMascotas.add(mascota);
+        // Insertar en la base de datos
+        boolean exito = animalDAO.insertarMascota(m);
+        
+        if (exito) {
             mensaje = "Mascota registrada correctamente.";
-            return true;
-
-        } catch (IllegalArgumentException ex) {
-            mensaje = ex.getMessage();
-            return false;
+        } else {
+            throw new Exception("No se pudo registrar la mascota en la base de datos.");
         }
     }
 
     /**
-     * Busca una mascota en la lista por su apodo.
+     * Busca una mascota en la base de datos por su apodo.
      *
      * @param apodo Apodo de la mascota a buscar.
      * @return El objeto {@link MascotaVO} correspondiente o {@code null} si no se encuentra.
+     * @throws Exception si ocurre un error de base de datos
      */
-    public MascotaVO buscarMascota(String apodo) {
-        if (apodo == null) return null;
-        for (MascotaVO mascota : listaMascotas) {
-            if (mascota.getApodo().equalsIgnoreCase(apodo)) {
-                return mascota;
-            }
+    public MascotaVO buscarMascota(String apodo) throws Exception {
+        if (apodo == null || apodo.isBlank()) {
+            return null;
         }
-        return null;
+        
+        try {
+            MascotaVO mascota = (MascotaVO) animalDAO.consultarAnimalApodo(apodo);
+            if (mascota == null) {
+                mensaje = "No se encontró ninguna mascota con ese apodo.";
+            }
+            return mascota;
+        } catch (Exception e) {
+            throw new Exception("Error al buscar mascota: " + e.getMessage());
+        }
     }
 
     /**
-     * Elimina una mascota existente del sistema.
+     * Elimina una mascota existente de la base de datos.
      *
      * @param apodo Apodo de la mascota a eliminar.
-     * @return {@code true} si la mascota fue eliminada, {@code false} si no existe.
+     * @throws Exception si la mascota no existe o hay error de BD
      */
-    public boolean eliminarMascota(String apodo) {
-        MascotaVO mascota = buscarMascota(apodo);
-        if (mascota != null) {
-            listaMascotas.remove(mascota);
-            mensaje = "Mascota eliminada correctamente.";
-            return true;
-        } else {
-            mensaje = "No se encontró ninguna mascota con ese apodo.";
-            return false;
+    public void eliminarMascota(String apodo) throws Exception {
+        if (apodo == null || apodo.isBlank()) {
+            throw new IllegalArgumentException("El apodo no puede estar vacío.");
+        }
+
+        try {
+            boolean exito = animalDAO.eliminarMascota(apodo);
+            if (exito) {
+                mensaje = "Mascota eliminada correctamente.";
+            } else {
+                throw new Exception("No se encontró ninguna mascota con ese apodo.");
+            }
+        } catch (ConexionException e) {
+            throw new Exception("Error al eliminar mascota: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Lista todas las mascotas desde la base de datos.
+     *
+     * @return lista de mascotas
+     * @throws Exception si ocurre un error de base de datos
+     */
+    public List<MascotaVO> listarMascotas() throws Exception {
+        try {
+            return animalDAO.listarTodasMascotas();
+        } catch (ConexionException e) {
+            throw new Exception("Error al listar mascotas: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Actualiza los datos de una mascota (no se puede modificar familia, género, especie).
+     *
+     * @param mascota Mascota con los datos actualizados
+     * @throws Exception si hay error en la actualización
+     */
+    public void actualizarMascota(MascotaVO mascota) throws Exception {
+        if (mascota == null) {
+            throw new IllegalArgumentException("Objeto mascota nulo.");
+        }
+
+        try {
+            boolean exito = animalDAO.actualizarMascota(mascota);
+            if (exito) {
+                mensaje = "Mascota actualizada correctamente.";
+            } else {
+                throw new Exception("No se pudo actualizar la mascota.");
+            }
+        } catch (ConexionException e) {
+            throw new Exception("Error al actualizar mascota: " + e.getMessage());
         }
     }
 
