@@ -11,7 +11,7 @@ import udistrital.avanzada.parcial.modelo.Alimentacion;
 import udistrital.avanzada.parcial.modelo.AnimalVO;
 import udistrital.avanzada.parcial.modelo.Clasificacion;
 import udistrital.avanzada.parcial.modelo.MascotaVO;
-import udistrital.avanzada.parcial.modelo.persistencia.ConexionBD;
+import udistrital.avanzada.parcial.modelo.conexion.ConexionBD;
 import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
 
 /**

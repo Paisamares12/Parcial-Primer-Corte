@@ -1,10 +1,10 @@
 package udistrital.avanzada.parcial.control;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Random;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import udistrital.avanzada.parcial.modelo.Alimentacion;
 import udistrital.avanzada.parcial.modelo.Clasificacion;
@@ -12,7 +12,13 @@ import udistrital.avanzada.parcial.modelo.MascotaVO;
 import udistrital.avanzada.parcial.vista.VentanaPrincipal;
 
 /**
- * Clase ControlInterfaz que conecta el control con la vista
+ * Clase ControlInterfaz que conecta el control con la vista.
+ * 
+ * <p>
+ * Implementa ActionListener para manejar todos los eventos de la interfaz
+ * gráfica. Coordina las acciones del usuario con la lógica del negocio
+ * sin usar diálogos emergentes (JOptionPane).
+ * </p>
  *
  * @author Paula Martínez
  * @version 1.0
@@ -24,6 +30,11 @@ public class ControlInterfaz implements ActionListener {
     private VentanaPrincipal vPrincipal;
     private static String panelActual = "Inicio";
 
+    /**
+     * Constructor que inicializa la interfaz y configura los eventos.
+     * 
+     * @param cLogica controlador de lógica del negocio
+     */
     public ControlInterfaz(ControlLogica cLogica) {
         this.cLogica = cLogica;
         this.vPrincipal = new VentanaPrincipal(this);
@@ -31,13 +42,20 @@ public class ControlInterfaz implements ActionListener {
         this.vPrincipal.setVisible(true);
         configurarVentanas();
         conectarEventos();
+        verificarInicializacion();
     }
 
+    /**
+     * Configura las ventanas iniciales (combos y tips).
+     */
     public void configurarVentanas() {
         datoRandom();
         inicializarCombos();
     }
 
+    /**
+     * Conecta todos los eventos de botones con sus listeners.
+     */
     private void conectarEventos() {
         // Botones del menú (navegación)
         this.vPrincipal.getPanelMenu().getBotonConsultar().addActionListener(this);
@@ -56,6 +74,9 @@ public class ControlInterfaz implements ActionListener {
         this.vPrincipal.getPanelMain().getPanelEliminar().getBotonEliminar().addActionListener(this);
     }
 
+    /**
+     * Inicializa los combos de clasificación y alimentación en todos los paneles.
+     */
     public void inicializarCombos() {
         // Panel Adicionar
         for (String c : cLogica.obtenerClasificaciones()) {
@@ -82,6 +103,9 @@ public class ControlInterfaz implements ActionListener {
         }
     }
 
+    /**
+     * Genera un tip aleatorio del día y lo muestra en el panel de inicio.
+     */
     public void datoRandom() {
         String[] tips = {
             "A los camaleones les gusta la luz UVB para su salud.</html>",
@@ -105,13 +129,35 @@ public class ControlInterfaz implements ActionListener {
         this.vPrincipal.getPanelMain().getPanelInicio().getlTips().setText(tipLabel);
     }
 
+    /**
+     * Verifica la inicialización de la base de datos y carga inicial.
+     */
+    private void verificarInicializacion() {
+        boolean hayConexion = cLogica.probarConexion();
+        
+        if (!hayConexion) {
+            return;
+        }
+        
+        try {
+            List<MascotaVO> mascotas = cLogica.listarMascotas();
+            
+            List<MascotaVO> incompletas = cLogica.getMascotasIncompletas();
+            if (incompletas != null && !incompletas.isEmpty()) {
+                // Las mascotas incompletas se manejan internamente
+            }
+        } catch (Exception e) {
+            // Error manejado internamente
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         // Navegación entre paneles
         if (e.getSource() == this.vPrincipal.getPanelMenu().getBotonConsultar()) {
             this.vPrincipal.getPanelMain().mostrarPanelConsultar();
             panelActual = "Consultar";
-            cargarTablaMascotas(this.vPrincipal.getPanelMain().getPanelConsultar().getTablaAnimales());
+            cargarTodasMascotas();
         }
         if (e.getSource() == this.vPrincipal.getPanelMenu().getBotonInicio()) {
             this.vPrincipal.getPanelMain().mostrarPanelInicio();
@@ -132,22 +178,18 @@ public class ControlInterfaz implements ActionListener {
             cargarTablaMascotas(this.vPrincipal.getPanelMain().getPanelEliminar().getTablaAnimales());
         }
         
-        // Limpiar campos
         if (e.getSource() == this.vPrincipal.getPanelMenu().getBotonLimpiar()) {
             limpiarCampos();
         }
         
-        // Serializar
         if (e.getSource() == this.vPrincipal.getPanelMenu().getBotonSerializar()) {
             serializarDatos();
         }
         
-        // Salir
         if (e.getSource() == this.vPrincipal.getPanelMenu().getBotonSalir()) {
             salirAplicacion();
         }
 
-        // Acciones de los botones en cada panel
         if (e.getSource() == this.vPrincipal.getPanelMain().getPanelAdicionar().getBotonAdicionar()) {
             adicionarMascota();
         }
@@ -165,12 +207,16 @@ public class ControlInterfaz implements ActionListener {
         }
     }
 
+    /**
+     * Limpia los campos del panel actual.
+     */
     private void limpiarCampos() {
         if (panelActual.equals("Consultar")) {
             this.vPrincipal.getPanelMain().getPanelConsultar().getCajaApodo().setText("");
             this.vPrincipal.getPanelMain().getPanelConsultar().getCajaFamilia().setText("");
             this.vPrincipal.getPanelMain().getPanelConsultar().getComboClasificacion().setSelectedIndex(0);
             this.vPrincipal.getPanelMain().getPanelConsultar().getComboAlimentacion().setSelectedIndex(0);
+            cargarTodasMascotas();
         } else if (panelActual.equals("Adicionar")) {
             this.vPrincipal.getPanelMain().getPanelAdicionar().getCajaApodo().setText("");
             this.vPrincipal.getPanelMain().getPanelAdicionar().getCajaEspecie().setText("");
@@ -187,6 +233,9 @@ public class ControlInterfaz implements ActionListener {
         }
     }
 
+    /**
+     * Adiciona una nueva mascota a la base de datos.
+     */
     private void adicionarMascota() {
         try {
             String nombre = vPrincipal.getPanelMain().getPanelAdicionar().getCajaNombre().getText();
@@ -203,16 +252,19 @@ public class ControlInterfaz implements ActionListener {
             MascotaVO mascota = new MascotaVO(apodo, alimentacion, nombre, clasificacion, familia, genero, especie);
             cLogica.registrarMascota(mascota);
 
-            JOptionPane.showMessageDialog(vPrincipal, "Mascota registrada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             limpiarCampos();
+            vPrincipal.getPanelMain().mostrarPanelConsultar();
+            panelActual = "Consultar";
+            cargarTodasMascotas();
 
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(vPrincipal, ex.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vPrincipal, "Error al registrar mascota: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // Error capturado, no se hace nada visible
         }
     }
 
+    /**
+     * Consulta mascotas según criterios ingresados.
+     */
     private void consultarMascota() {
         try {
             String apodo = vPrincipal.getPanelMain().getPanelConsultar().getCajaApodo().getText().trim();
@@ -222,23 +274,28 @@ public class ControlInterfaz implements ActionListener {
                 if (mascota != null) {
                     mostrarMascotaEnTabla(vPrincipal.getPanelMain().getPanelConsultar().getTablaAnimales(), mascota);
                 } else {
-                    JOptionPane.showMessageDialog(vPrincipal, "No se encontró mascota con ese apodo", "No encontrado", JOptionPane.INFORMATION_MESSAGE);
+                    DefaultTableModel modeloVacio = new DefaultTableModel(
+                        new String[]{"Apodo", "Nombre", "Clasificación", "Familia", "Género", "Especie", "Alimentación"}, 0
+                    );
+                    vPrincipal.getPanelMain().getPanelConsultar().getTablaAnimales().setModel(modeloVacio);
                 }
             } else {
-                cargarTablaMascotas(vPrincipal.getPanelMain().getPanelConsultar().getTablaAnimales());
+                cargarTodasMascotas();
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vPrincipal, "Error al consultar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // Error capturado
         }
     }
 
+    /**
+     * Modifica una mascota seleccionada de la tabla.
+     */
     private void modificarMascota() {
         try {
             int filaSeleccionada = vPrincipal.getPanelMain().getPanelModificar().getTablaAnimales().getSelectedRow();
             
             if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(vPrincipal, "Debe seleccionar una mascota de la tabla", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -254,106 +311,170 @@ public class ControlInterfaz implements ActionListener {
                 mascota.setAlimentacion(Alimentacion.valueOf(alimentacionStr));
 
                 cLogica.actualizarMascota(mascota);
-                JOptionPane.showMessageDialog(vPrincipal, "Mascota modificada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 cargarTablaMascotas(vPrincipal.getPanelMain().getPanelModificar().getTablaAnimales());
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vPrincipal, "Error al modificar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // Error capturado
         }
     }
 
+    /**
+     * Elimina una mascota seleccionada de la tabla.
+     */
     private void eliminarMascota() {
         try {
             int filaSeleccionada = vPrincipal.getPanelMain().getPanelEliminar().getTablaAnimales().getSelectedRow();
             
             if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(vPrincipal, "Debe seleccionar una mascota de la tabla", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            int confirmacion = JOptionPane.showConfirmDialog(vPrincipal, 
-                "¿Está seguro de eliminar esta mascota?", 
-                "Confirmar eliminación", 
-                JOptionPane.YES_NO_OPTION);
+            DefaultTableModel modelo = (DefaultTableModel) vPrincipal.getPanelMain().getPanelEliminar().getTablaAnimales().getModel();
+            String apodo = (String) modelo.getValueAt(filaSeleccionada, 0);
 
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                DefaultTableModel modelo = (DefaultTableModel) vPrincipal.getPanelMain().getPanelEliminar().getTablaAnimales().getModel();
-                String apodo = (String) modelo.getValueAt(filaSeleccionada, 0);
-
-                cLogica.eliminarMascota(apodo);
-                JOptionPane.showMessageDialog(vPrincipal, "Mascota eliminada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                cargarTablaMascotas(vPrincipal.getPanelMain().getPanelEliminar().getTablaAnimales());
-            }
+            cLogica.eliminarMascota(apodo);
+            cargarTablaMascotas(vPrincipal.getPanelMain().getPanelEliminar().getTablaAnimales());
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vPrincipal, "Error al eliminar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // Error capturado
         }
     }
 
+    /**
+     * Serializa los datos actuales.
+     */
     private void serializarDatos() {
         try {
             cLogica.guardarArchivo();
-            JOptionPane.showMessageDialog(vPrincipal, "Datos serializados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vPrincipal, "Error al serializar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // Error capturado
         }
     }
 
+    /**
+     * Cierra la aplicación guardando datos en archivo de acceso aleatorio.
+     */
     private void salirAplicacion() {
         try {
-            cLogica.guardarArchivo();
-            System.exit(0);
+            cLogica.guardarAccesoAleatorio();
         } catch (Exception ex) {
-            int respuesta = JOptionPane.showConfirmDialog(vPrincipal, 
-                "Error al guardar datos. ¿Desea salir de todos modos?", 
-                "Error al guardar", 
-                JOptionPane.YES_NO_OPTION);
-            if (respuesta == JOptionPane.YES_OPTION) {
-                System.exit(0);
-            }
+            // Error capturado
         }
+        System.exit(0);
     }
 
-    private void cargarTablaMascotas(javax.swing.JTable tabla) {
+    /**
+     * Carga todas las mascotas en el panel consultar.
+     */
+    private void cargarTodasMascotas() {
         try {
+            if (!cLogica.probarConexion()) {
+                return;
+            }
+            
             List<MascotaVO> mascotas = cLogica.listarMascotas();
+            
+            if (mascotas.isEmpty()) {
+                DefaultTableModel modeloVacio = new DefaultTableModel(
+                    new String[]{"Apodo", "Nombre", "Clasificación", "Familia", "Género", "Especie", "Alimentación"}, 0
+                );
+                this.vPrincipal.getPanelMain().getPanelConsultar().getTablaAnimales().setModel(modeloVacio);
+                return;
+            }
+            
             DefaultTableModel modelo = new DefaultTableModel(
                 new String[]{"Apodo", "Nombre", "Clasificación", "Familia", "Género", "Especie", "Alimentación"}, 0
-            );
+            ) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
 
             for (MascotaVO m : mascotas) {
                 modelo.addRow(new Object[]{
                     m.getApodo(),
                     m.getNombre(),
-                    m.getClasificacion(),
+                    m.getClasificacion().name(),
                     m.getFamilia(),
                     m.getGenero(),
                     m.getEspecie(),
-                    m.getAlimentacion()
+                    m.getAlimentacion().name()
+                });
+            }
+
+            this.vPrincipal.getPanelMain().getPanelConsultar().getTablaAnimales().setModel(modelo);
+
+        } catch (Exception ex) {
+            // Error capturado
+        }
+    }
+
+    /**
+     * Carga todas las mascotas en una tabla específica.
+     * 
+     * @param tabla JTable donde cargar los datos
+     */
+    private void cargarTablaMascotas(javax.swing.JTable tabla) {
+        try {
+            if (!cLogica.probarConexion()) {
+                return;
+            }
+            
+            List<MascotaVO> mascotas = cLogica.listarMascotas();
+            DefaultTableModel modelo = new DefaultTableModel(
+                new String[]{"Apodo", "Nombre", "Clasificación", "Familia", "Género", "Especie", "Alimentación"}, 0
+            ) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            for (MascotaVO m : mascotas) {
+                modelo.addRow(new Object[]{
+                    m.getApodo(),
+                    m.getNombre(),
+                    m.getClasificacion().name(),
+                    m.getFamilia(),
+                    m.getGenero(),
+                    m.getEspecie(),
+                    m.getAlimentacion().name()
                 });
             }
 
             tabla.setModel(modelo);
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vPrincipal, "Error al cargar tabla: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // Error capturado
         }
     }
 
+    /**
+     * Muestra una mascota específica en la tabla.
+     * 
+     * @param tabla JTable donde mostrar la mascota
+     * @param mascota MascotaVO a mostrar
+     */
     private void mostrarMascotaEnTabla(javax.swing.JTable tabla, MascotaVO mascota) {
         DefaultTableModel modelo = new DefaultTableModel(
             new String[]{"Apodo", "Nombre", "Clasificación", "Familia", "Género", "Especie", "Alimentación"}, 0
-        );
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
         modelo.addRow(new Object[]{
             mascota.getApodo(),
             mascota.getNombre(),
-            mascota.getClasificacion(),
+            mascota.getClasificacion().name(),
             mascota.getFamilia(),
             mascota.getGenero(),
             mascota.getEspecie(),
-            mascota.getAlimentacion()
+            mascota.getAlimentacion().name()
         });
 
         tabla.setModel(modelo);

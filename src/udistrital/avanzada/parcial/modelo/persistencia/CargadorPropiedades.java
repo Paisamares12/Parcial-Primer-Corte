@@ -6,6 +6,7 @@ package udistrital.avanzada.parcial.modelo.persistencia;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -14,9 +15,19 @@ import udistrital.avanzada.parcial.modelo.Clasificacion;
 import udistrital.avanzada.parcial.modelo.MascotaVO;
 
 /**
- * Clase CargadorPropiedades
+ * Clase CargadorPropiedades que gestiona la lectura del archivo
+ * de configuración inicial de mascotas.
  * 
- * Lee el archivo de propiedades y carga las mascotas iniciales.
+ * <p>
+ * Lee un archivo .properties que contiene información de mascotas
+ * en formato CSV y las convierte en objetos MascotaVO. Valida que
+ * los datos estén completos y sean correctos según los enums definidos.
+ * </p>
+ * 
+ * <p>
+ * Formato esperado en el archivo properties:<br>
+ * Animal[N]=Nombre,Apodo,Clasificacion,Familia,Genero,Especie,Alimentacion
+ * </p>
  * 
  * @author Juan Sebastián Bravo Rojas
  * @version 2.0
@@ -24,54 +35,86 @@ import udistrital.avanzada.parcial.modelo.MascotaVO;
  */
 public class CargadorPropiedades {
 
-    private static final String RUTA_ARCHIVO = "data/mascotas.properties";
+    /** Ruta relativa al archivo de propiedades de mascotas */
+    private static final String RUTA_ARCHIVO = "src/data/mascotas.properties";
 
     /**
-     * Carga todas las mascotas desde el archivo de propiedades.
+     * Carga todas las mascotas definidas en el archivo de propiedades.
      * 
-     * @return Lista de mascotas leídas del archivo
-     * @throws IOException si hay error al leer el archivo
+     * <p>
+     * Lee el archivo properties y convierte cada entrada válida en un
+     * objeto MascotaVO. Si una entrada tiene datos incompletos o inválidos,
+     * se omite y se continúa con las siguientes entradas.
+     * </p>
+     * 
+     * <p>
+     * Intenta cargar el archivo desde el sistema de archivos primero,
+     * y si no lo encuentra, intenta cargarlo como recurso desde el classpath.
+     * </p>
+     * 
+     * @return lista de objetos MascotaVO cargados desde el archivo
+     * @throws IOException si no se puede leer el archivo de propiedades
      */
     public List<MascotaVO> cargarMascotas() throws IOException {
         List<MascotaVO> mascotas = new ArrayList<>();
         Properties props = new Properties();
 
+        // Intentar cargar desde el sistema de archivos
         try (FileInputStream fis = new FileInputStream(RUTA_ARCHIVO)) {
             props.load(fis);
-
-            int i = 1;
-            while (props.containsKey("Animal" + i)) {
-                String datos = props.getProperty("Animal" + i);
-                MascotaVO mascota = parsearMascota(datos, i);
-                
-                if (mascota != null) {
-                    mascotas.add(mascota);
+        } catch (IOException e) {
+            // Si falla, intentar cargar como recurso desde el classpath
+            try (InputStream is = getClass().getClassLoader().getResourceAsStream("data/mascotas.properties")) {
+                if (is != null) {
+                    props.load(is);
+                } else {
+                    throw new IOException("No se encontró el archivo mascotas.properties en: " + RUTA_ARCHIVO + 
+                                        " ni en el classpath (data/mascotas.properties)");
                 }
-                i++;
             }
+        }
+
+        // Parsear las mascotas del archivo
+        int i = 1;
+        while (props.containsKey("Animal" + i)) {
+            String datos = props.getProperty("Animal" + i);
+            MascotaVO mascota = parsearMascota(datos, i);
+            
+            if (mascota != null) {
+                mascotas.add(mascota);
+            }
+            i++;
         }
 
         return mascotas;
     }
 
     /**
-     * Convierte una línea del archivo properties en un objeto MascotaVO.
-     * Formato esperado: Nombre,Apodo,Clasificacion,Familia,Genero,Especie,Alimentacion
+     * Convierte una línea de texto en un objeto MascotaVO.
      * 
-     * @param linea Línea con los datos separados por comas
-     * @param numero Número del animal (para referencia en errores)
-     * @return MascotaVO creado o null si hay datos incompletos
+     * <p>
+     * Parsea una cadena en formato CSV y crea un objeto MascotaVO con
+     * los datos correspondientes. Valida que todos los campos estén
+     * presentes y que los valores de enum sean válidos.
+     * </p>
+     * 
+     * <p>
+     * Formato esperado:<br>
+     * Nombre,Apodo,Clasificacion,Familia,Genero,Especie,Alimentacion
+     * </p>
+     * 
+     * @param linea cadena con los datos separados por comas
+     * @param numero número del animal en el archivo (para identificación)
+     * @return objeto MascotaVO creado o null si hay datos inválidos
      */
     private MascotaVO parsearMascota(String linea, int numero) {
         if (linea == null || linea.trim().isEmpty()) {
-            System.err.println("Animal" + numero + " está vacío");
             return null;
         }
 
         String[] partes = linea.split(",");
         
         if (partes.length < 7) {
-            System.err.println("Animal" + numero + " tiene datos incompletos: " + linea);
             return null;
         }
 
@@ -84,26 +127,30 @@ public class CargadorPropiedades {
             String especie = partes[5].trim();
             Alimentacion alimentacion = Alimentacion.valueOf(partes[6].trim());
 
-            // Validar que no haya campos vacíos
             if (nombre.isEmpty() || apodo.isEmpty() || familia.isEmpty() || 
                 genero.isEmpty() || especie.isEmpty()) {
-                System.err.println("Animal" + numero + " tiene campos vacíos");
                 return null;
             }
 
-            return new MascotaVO(apodo, alimentacion, nombre, clasificacion, familia, genero, especie);
+            return new MascotaVO(apodo, alimentacion, nombre, clasificacion, 
+                                 familia, genero, especie);
 
         } catch (IllegalArgumentException e) {
-            System.err.println("Error al parsear Animal" + numero + ": " + e.getMessage());
             return null;
         }
     }
 
     /**
-     * Verifica si una mascota tiene datos incompletos.
+     * Verifica si una mascota tiene datos incompletos o inválidos.
      * 
-     * @param mascota Mascota a verificar
-     * @return true si le falta información
+     * <p>
+     * Comprueba que todos los campos obligatorios de la mascota estén
+     * presentes y no sean vacíos. Útil para validar antes de insertar
+     * en la base de datos.
+     * </p>
+     * 
+     * @param mascota objeto MascotaVO a verificar
+     * @return true si faltan datos obligatorios, false si está completa
      */
     public boolean tienesDatosIncompletos(MascotaVO mascota) {
         return mascota.getNombre() == null || mascota.getNombre().isBlank() ||
