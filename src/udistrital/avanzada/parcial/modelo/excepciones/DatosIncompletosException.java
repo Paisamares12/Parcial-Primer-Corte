@@ -5,7 +5,7 @@ package udistrital.avanzada.parcial.modelo.excepciones;
  * en el registro o modificación de una mascota.
  * 
  * @author Juan Sebastián Bravo Rojas
- * @version 2.0
+ * @version 4.0
  * @since 2025-10-13
  */
 public class DatosIncompletosException extends Exception {
