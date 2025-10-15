@@ -80,15 +80,6 @@ public class Menu extends javax.swing.JPanel {
         return botonSalir;
     }
 
-    /**
-     * Obtiene el botón que permite serializar los datos de las mascotas,
-     * guardándolos en un archivo o formato persistente.
-     * 
-     * @return el botón de serializar
-     */
-    public JButton getBotonSerializar() {
-        return botonSerializar;
-    }
 
 
     @SuppressWarnings("unchecked")
@@ -100,7 +91,6 @@ public class Menu extends javax.swing.JPanel {
         botonConsultar = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         botonModificar = new javax.swing.JButton();
-        botonSerializar = new javax.swing.JButton();
         botonLimpiar = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
 
@@ -147,21 +137,13 @@ public class Menu extends javax.swing.JPanel {
         botonModificar.setBorder(null);
         add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 230, 70));
 
-        botonSerializar.setBackground(new java.awt.Color(2, 68, 129));
-        botonSerializar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        botonSerializar.setForeground(new java.awt.Color(255, 255, 255));
-        botonSerializar.setText("Serializar");
-        botonSerializar.setToolTipText("");
-        botonSerializar.setBorder(null);
-        add(botonSerializar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 230, 70));
-
         botonLimpiar.setBackground(new java.awt.Color(2, 68, 129));
         botonLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         botonLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         botonLimpiar.setText("Limpiar");
         botonLimpiar.setToolTipText("");
         botonLimpiar.setBorder(null);
-        add(botonLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 230, 70));
+        add(botonLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 230, 70));
 
         botonSalir.setBackground(new java.awt.Color(2, 68, 129));
         botonSalir.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -169,7 +151,7 @@ public class Menu extends javax.swing.JPanel {
         botonSalir.setText("Salir");
         botonSalir.setToolTipText("");
         botonSalir.setBorder(null);
-        add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 230, 70));
+        add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 230, 70));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -181,6 +163,5 @@ public class Menu extends javax.swing.JPanel {
     private javax.swing.JButton botonLimpiar;
     private javax.swing.JButton botonModificar;
     private javax.swing.JButton botonSalir;
-    private javax.swing.JButton botonSerializar;
     // End of variables declaration//GEN-END:variables
 }

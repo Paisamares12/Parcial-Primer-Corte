@@ -1,0 +1,77 @@
+[33mcommit 3ef30bc232f6b5bb20a0aabc722738ebe06403ff[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: Bravo <jsbravor@udistrital.edu.co>
+Date:   Tue Oct 14 20:10:02 2025 -0500
+
+    ni
+
+[33mcommit 7c2ee7f0040dd2ae055c08647b6a961b013f2737[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 7e8a695 345b9b8
+Author: ArizZzuxi <134643818+ArizZzuxi@users.noreply.github.com>
+Date:   Tue Oct 14 19:01:27 2025 -0500
+
+    Lógica y guardado arreglado -Ariza-
+    
+    Ariza rama
+
+[33mcommit 345b9b8615ca28b5b0eab9422d21bdd578083512[m
+Author: Ariza <juanitoariza21@gmail.com>
+Date:   Tue Oct 14 18:58:48 2025 -0500
+
+    Arreglo de funcionalidades
+
+[33mcommit ae7b18a01dddd3b71ad9b5a956b07f5fecf44b5f[m
+Author: Ariza <juanitoariza21@gmail.com>
+Date:   Tue Oct 14 17:02:45 2025 -0500
+
+    Carga de tabla correcta
+
+[33mcommit a837a127e5e290d04d1323fb558b329cd0793ec2[m
+Author: Ariza <juanitoariza21@gmail.com>
+Date:   Tue Oct 14 15:56:19 2025 -0500
+
+    CreacionTabla
+
+[33mcommit 5df76f90aec97ddee3fd8f41dc4f96f2f411bd60[m
+Author: Ariza <juanitoariza21@gmail.com>
+Date:   Tue Oct 14 13:05:12 2025 -0500
+
+    FuncionesCmascotas y AnimalDAO
+
+[33mcommit 7e8a695794aec16a972bfe4c500033b60c60c0e3[m
+Merge: db50bdf e688bac
+Author: MrBraro <juansebasbraro@gmail.com>
+Date:   Mon Oct 13 10:41:47 2025 -0500
+
+    Merge pull request #2 from Paisamares12/Juan-Sebastian-Bravo-Rojas
+    
+    Refinamiento de controles y creación de excepciones
+
+[33mcommit e688bac3b7f0cafa7fe1255ac3757fc1b8d4bf88[m[33m ([m[1;31morigin/Juan-Sebastian-Bravo-Rojas[m[33m)[m
+Author: Bravo <jsbravor@udistrital.edu.co>
+Date:   Mon Oct 13 10:38:22 2025 -0500
+
+    Refinamiento de controles y creación de excepciones
+
+[33mcommit db50bdffa5ebb2324971aa25d7d5c3bbeb824375[m
+Author: Paula <paisamares12@gmail.com>
+Date:   Sat Oct 11 11:28:40 2025 -0500
+
+    Pequeños cambios docs añadido
+
+[33mcommit 2a157829cc02444ed76f3c4af21fef0571099453[m
+Author: Paula <paisamares12@gmail.com>
+Date:   Fri Oct 10 20:16:50 2025 -0500
+
+    Terminado interfaz gráfica e implementacion de botones
+
+[33mcommit d521169ce3043513cb324f4f2ecfd5153a4a3376[m
+Author: Paula <paisamares12@gmail.com>
+Date:   Fri Oct 10 13:48:18 2025 -0500
+
+    Adicionar algunos elementos de vista, mejorar la conexion y modificar clase animalDAO para consultas
+
+[33mcommit 2633fe1d8197d9b02811adddab5ea35e33342284[m
+Author: Paula <paisamares12@gmail.com>
+Date:   Fri Oct 10 08:32:20 2025 -0500
+
+    Primer commit - Proyecto mascotas exóticas

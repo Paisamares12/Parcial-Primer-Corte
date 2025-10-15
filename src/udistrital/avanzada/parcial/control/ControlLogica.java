@@ -20,7 +20,7 @@ import udistrital.avanzada.parcial.modelo.persistencia.InicializadorBD;
  * establezca la conexión.
  * </p>
  *
- * Modificado: Juan Ariza
+ * Modificado: Juan Ariza y Juan Sebastian Bravo Rojas
  * 
  * (Se modifico principalmente para las relaciones que permitiran el filtrado y la serialización de los datos)
  * 

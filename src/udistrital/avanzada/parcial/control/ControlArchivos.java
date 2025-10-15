@@ -23,7 +23,7 @@ import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
  * alimentación, representando el estado completo del sistema al salir.
  * </p>
  * 
- * Modificado por: Juan Ariza 
+ * Modificado por: Juan Ariza y Juan Sebastián Bravo Rojas
  * 
  * @author Paula Martínez
  * @version 4.0
@@ -102,19 +102,34 @@ public class ControlArchivos {
     }
 
     /**
-     * Carga la lista desde archivo de acceso aleatorio.
-     * 
-     * <p>
-     * Este método recupera las mascotas con TODOS sus datos incluyendo
-     * alimentación. Puede usarse para recuperar el estado anterior del sistema.
-     * </p>
-     * 
-     * @return lista de mascotas con todos los datos
-     * @throws ConexionException si hay error al leer
-     */
+    * Carga la lista desde archivo de acceso aleatorio.
+    * 
+    * <p>
+    * Este método recupera las mascotas con TODOS sus datos incluyendo
+    * alimentación. Si detecta mascotas con datos incompletos, las
+    * filtra y notifica cuántas necesitan corrección antes de iniciar
+    * el resto de la aplicación.
+    * </p>
+    * 
+    * @return lista de mascotas con todos los datos válidos
+    * @throws ConexionException si hay error al leer
+    */
     public List<MascotaVO> cargarAleatorio() throws ConexionException {
         try {
-            return accesoAleatorio.cargarMascotas();
+            List<MascotaVO> lista = accesoAleatorio.cargarMascotas();
+
+            // 🔹 Validar y limpiar datos incompletos
+            List<MascotaVO> incompletas = ValidadorDatos.filtrarIncompletas(lista);
+            if (!incompletas.isEmpty()) {
+                System.out.println("⚠️ Se encontraron " + incompletas.size()
+                + " registros incompletos. Deben ser corregidos.");
+            }
+
+            // Puedes decidir si las eliminas o solo las reportas:
+            ValidadorDatos.limpiarIncompletas(lista);
+
+            return lista;
+
         } catch (Exception e) {
             throw new ConexionException("Error al leer archivo aleatorio", e);
         }

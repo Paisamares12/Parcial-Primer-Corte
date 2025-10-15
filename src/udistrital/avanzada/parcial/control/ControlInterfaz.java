@@ -20,7 +20,7 @@ import udistrital.avanzada.parcial.vista.VentanaPrincipal;
  * gráfica. Coordina las acciones del usuario con la lógica del negocio
  * sin usar diálogos emergentes (JOptionPane).
  * 
- * Modificado y documentado: Juan Ariza
+ * Modificado y documentado: Juan Ariza y Juan Sebastian Bravo Rojas
  * 
  * (Se agregaron las relaciones entre las nuevas funcionalidades de los controladores y la vista)
  * </p>
@@ -70,7 +70,6 @@ public class ControlInterfaz implements ActionListener {
         this.vPrincipal.getPanelMenu().getBotonEliminar().addActionListener(this);
         this.vPrincipal.getPanelMenu().getBotonModificar().addActionListener(this);
         this.vPrincipal.getPanelMenu().getBotonLimpiar().addActionListener(this);
-        this.vPrincipal.getPanelMenu().getBotonSerializar().addActionListener(this);
         this.vPrincipal.getPanelMenu().getBotonSalir().addActionListener(this);
 
         // Botones de acción en cada panel
@@ -231,10 +230,6 @@ public class ControlInterfaz implements ActionListener {
         
         if (e.getSource() == this.vPrincipal.getPanelMenu().getBotonLimpiar()) {
             limpiarCampos();
-        }
-        
-        if (e.getSource() == this.vPrincipal.getPanelMenu().getBotonSerializar()) {
-            serializarDatos();
         }
         
         if (e.getSource() == this.vPrincipal.getPanelMenu().getBotonSalir()) {
@@ -423,17 +418,6 @@ public class ControlInterfaz implements ActionListener {
             
             cargarTablaMascotas(vPrincipal.getPanelMain().getPanelEliminar().getTablaAnimales());
 
-        } catch (Exception ex) {
-            // Error capturado
-        }
-    }
-
-    /**
-     * Serializa los datos SIN tipo de alimento para envío al IDPYBA.
-     */
-    private void serializarDatos() {
-        try {
-            cLogica.guardarArchivo();
         } catch (Exception ex) {
             // Error capturado
         }

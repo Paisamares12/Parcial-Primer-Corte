@@ -14,7 +14,7 @@ import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
  * y los objetos del modelo ({@link MascotaVO}). Se encarga de registrar, buscar,
  * eliminar y listar mascotas usando el patrón DAO.
  * 
- * Modificado y documentado: Juan Ariza
+ * Modificado y documentado: Juan Ariza y Juan Sebastian Bravo Rojas
  * 
  *
  * @author Paula Martinez
