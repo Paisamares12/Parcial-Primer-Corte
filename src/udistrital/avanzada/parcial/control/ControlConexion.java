@@ -1,7 +1,7 @@
 package udistrital.avanzada.parcial.control;
 
 import java.sql.Connection;
-import udistrital.avanzada.parcial.modelo.persistencia.ConexionBD;
+import udistrital.avanzada.parcial.modelo.conexion.ConexionBD;
 import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
 
 /**
@@ -13,11 +13,12 @@ import udistrital.avanzada.parcial.modelo.excepciones.ConexionException;
  * 
  * <p>
  * Originalmente creada por Paula Martínez.<br>
- * Modificada y documentada por Juan Sebastián Bravo Rojas.
+ * Modificada y documentada por Juan Sebastián Bravo Rojas y Juan Ariza
  * </p>
  * 
+ * 
  * @author Paula Martinez
- * @version 2.0
+ * @version 4.0
  * @since 2025-10-13
  */
 public class ControlConexion {
@@ -34,6 +35,10 @@ public class ControlConexion {
      * @return true si hay conexión, false en caso contrario.
      */
     public boolean verificarConexion() {
+        if (!conexion.isConexionDisponible()) {
+            return false;
+        }
+        
         try (Connection conn = conexion.obtenerConexion()) {
             return (conn != null && !conn.isClosed());
         } catch (Exception e) {
