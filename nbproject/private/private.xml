@@ -5,7 +5,6 @@
         <group>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/vista/Menu.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/vista/PanelInicio.java</file>
-            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/modelo/conexion/ConexionBD.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/vista/VentanaPrincipal.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/control/ControlArchivos.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/control/ControlConexion.java</file>
@@ -13,11 +12,9 @@
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/control/ControlLogica.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/control/ControlMascota.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/control/Launcher.java</file>
-            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/control/ValidadorDatos.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/vista/PanelModificar.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/vista/MainForm.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/vista/PanelAdicionar.java</file>
-            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/vista/PanelConsultar.java</file>
             <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/FaunaFreaks/Parcial-Primer-Corte/src/udistrital/avanzada/parcial/vista/PanelEliminar.java</file>
         </group>
     </open-files>

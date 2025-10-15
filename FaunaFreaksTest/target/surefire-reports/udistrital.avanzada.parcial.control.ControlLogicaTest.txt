@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: udistrital.avanzada.parcial.control.ControlLogicaTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.029 s -- in udistrital.avanzada.parcial.control.ControlLogicaTest
