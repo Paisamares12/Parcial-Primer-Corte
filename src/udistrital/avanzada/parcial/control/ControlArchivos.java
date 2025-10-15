@@ -121,10 +121,8 @@ public class ControlArchivos {
             // 🔹 Validar y limpiar datos incompletos
             List<MascotaVO> incompletas = ValidadorDatos.filtrarIncompletas(lista);
             if (!incompletas.isEmpty()) {
-                System.out.println("⚠️ Se encontraron " + incompletas.size()
-                + " registros incompletos. Deben ser corregidos.");
+                
             }
-
             // Puedes decidir si las eliminas o solo las reportas:
             ValidadorDatos.limpiarIncompletas(lista);
 

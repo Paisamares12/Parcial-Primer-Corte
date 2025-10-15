@@ -12,15 +12,15 @@ import udistrital.avanzada.parcial.modelo.MascotaVO;
 
 /**
  * Clase AccesoAleatorioMascotas
- * 
+ *
  * <p>
- * Permite guardar y recuperar información de mascotas mediante un archivo
- * de acceso aleatorio. Este archivo se crea al salir de la aplicación y
- * contiene el estado final de todas las mascotas (incluyendo alimentación).
+ * Permite guardar y recuperar información de mascotas mediante un archivo de
+ * acceso aleatorio. Este archivo se crea al salir de la aplicación y contiene
+ * el estado final de todas las mascotas (incluyendo alimentación).
  * </p>
  *
  * Modificado y documentado: Juan Ariza
- * 
+ *
  * @author Juan Sebastián Bravo Rojas
  * @version 2.0
  * @since 2025-10-13
@@ -31,7 +31,7 @@ public class AccesoAleatorioMascotas {
 
     /**
      * Constructor que establece la ruta del archivo.
-     * 
+     *
      * @param rutaArchivo ruta del archivo de acceso aleatorio
      */
     public AccesoAleatorioMascotas(String rutaArchivo) {
@@ -40,11 +40,11 @@ public class AccesoAleatorioMascotas {
 
     /**
      * Guarda todas las mascotas en archivo de acceso aleatorio.
-     * 
+     *
      * <p>
-     * Sobrescribe el contenido anterior del archivo. Cada registro
-     * se guarda con todos sus campos separados por '|' incluyendo
-     * el tipo de alimentación.
+     * Sobrescribe el contenido anterior del archivo. Cada registro se guarda
+     * con todos sus campos separados por '|' incluyendo el tipo de
+     * alimentación.
      * </p>
      *
      * @param lista lista de mascotas a guardar
@@ -60,15 +60,16 @@ public class AccesoAleatorioMascotas {
 
         try (RandomAccessFile raf = new RandomAccessFile(archivo, "rw")) {
             raf.setLength(0);
-            
+
             for (MascotaVO m : lista) {
-                String registro = m.getApodo() + "|" +
-                                  m.getNombre() + "|" +
-                                  m.getClasificacion().name() + "|" +
-                                  m.getFamilia() + "|" +
-                                  m.getGenero() + "|" +
-                                  m.getEspecie() + "|" +
-                                  m.getAlimentacion().name() + "\n";
+                String registro = m.getApodo() + "|"
+                        + m.getNombre() + "|"
+                        + m.getClasificacion().name() + "|"
+                        + m.getFamilia() + "|"
+                        + m.getGenero() + "|"
+                        + m.getEspecie() + "|"
+                        + m.getAlimentacion().name() + "\n";
+                // Escribe el string 'registro' en el archivo 'raf' en formato UTF-8 para poder leerlo luego con readUTF()
                 raf.writeUTF(registro);
             }
         }
@@ -76,7 +77,7 @@ public class AccesoAleatorioMascotas {
 
     /**
      * Carga todas las mascotas desde el archivo de acceso aleatorio.
-     * 
+     *
      * <p>
      * Lee cada registro y reconstruye los objetos MascotaVO completos,
      * convirtiendo los strings a sus enums correspondientes.
@@ -103,13 +104,13 @@ public class AccesoAleatorioMascotas {
                     Alimentacion alimentacionEnum = parseAlimentacion(partes[6]);
 
                     MascotaVO m = new MascotaVO(
-                        partes[0].trim(),
-                        alimentacionEnum,
-                        partes[1].trim(),
-                        clasificacionEnum,
-                        partes[3].trim(),
-                        partes[4].trim(),
-                        partes[5].trim()
+                            partes[0].trim(),
+                            alimentacionEnum,
+                            partes[1].trim(),
+                            clasificacionEnum,
+                            partes[3].trim(),
+                            partes[4].trim(),
+                            partes[5].trim()
                     );
                     lista.add(m);
                 }
@@ -121,12 +122,14 @@ public class AccesoAleatorioMascotas {
 
     /**
      * Convierte un String a un valor del enum Alimentacion.
-     * 
+     *
      * @param texto string a convertir
      * @return valor del enum Alimentacion
      */
     private Alimentacion parseAlimentacion(String texto) {
-        if (texto == null) return null;
+        if (texto == null) {
+            return null;
+        }
 
         String normalizado = Normalizer.normalize(texto.trim(), Normalizer.Form.NFD)
                 .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
@@ -141,12 +144,14 @@ public class AccesoAleatorioMascotas {
 
     /**
      * Convierte un String a un valor del enum Clasificacion.
-     * 
+     *
      * @param texto string a convertir
      * @return valor del enum Clasificacion
      */
     private Clasificacion parseClasificacion(String texto) {
-        if (texto == null) return null;
+        if (texto == null) {
+            return null;
+        }
 
         String normalizado = Normalizer.normalize(texto.trim(), Normalizer.Form.NFD)
                 .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
@@ -161,13 +166,14 @@ public class AccesoAleatorioMascotas {
 
     /**
      * Capitaliza una cadena (primera letra mayúscula, resto minúsculas).
-     * 
+     *
      * @param texto cadena a capitalizar
      * @return cadena capitalizada
      */
     private String capitalizar(String texto) {
-        if (texto == null || texto.isBlank()) return texto;
+        if (texto == null || texto.isBlank()) {
+            return texto;
+        }
         return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
     }
 }
-

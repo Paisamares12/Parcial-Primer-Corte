@@ -9,8 +9,7 @@ import udistrital.avanzada.parcial.control.ControlInterfaz;
  * <p>
  * Esta clase actúa como contenedor principal de la interfaz gráfica. Combina un
  * panel de menú lateral, una barra de encabezado (header) y el área principal
- * donde se muestran los contenidos (main form). Usa el administrador de diseño
- * {@link MigLayout} para distribuir los componentes.</p>
+ * donde se muestran los contenidos (main form). </p>
  *
  * <p>
  * La clase también permite acceder a los paneles de menú y contenido principal

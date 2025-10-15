@@ -130,10 +130,4 @@ public abstract class AnimalVO implements Serializable {
         this.nombre = nombre;
     }
     
-    /**
-     * Método abstracto para obtener la descripción del animal.
-     * 
-     * @return descripción del animal
-     */
-    public abstract String getDescripcion();
 }

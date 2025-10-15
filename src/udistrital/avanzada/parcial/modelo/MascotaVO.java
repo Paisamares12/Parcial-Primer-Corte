@@ -90,9 +90,4 @@ public class MascotaVO extends AnimalVO implements Serializable {
     public void setAlimentacion(Alimentacion alimentacion) {
         this.alimentacion = alimentacion;
     }
-
-    @Override
-    public String getDescripcion() {
-        return "";
-    }
 }
