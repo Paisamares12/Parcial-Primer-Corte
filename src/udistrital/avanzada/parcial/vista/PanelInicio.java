@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package udistrital.avanzada.parcial.vista;
 
 import java.awt.Image;
@@ -10,29 +6,48 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 /**
+ * Clase PanelInicio
  *
- * @author paisa
+ * Representa la pantalla inicial del proyecto Fauna Freaks, donde se muestra el
+ * logotipo, una breve descripción de la aplicación y un espacio para mostrar
+ * diferentes consejos o “tips” al usuario.
+ *
+ * Este panel se carga al iniciar la aplicación y forma parte del contenedor
+ * principal {@link MainForm}.
+ *
+ * @author Paula Martínez
+ * @version 5.0
+ * @since 2025-10-10
  */
 public class PanelInicio extends javax.swing.JPanel {
 
     /**
-     * Creates new form PanelInicio
+     * Constructor del panel PanelInicio. Inicializa los componentes gráficos de
+     * la interfaz.
      */
     public PanelInicio() {
         initComponents();
     }
 
-    //TODO: poner algo en el placeholder jeje
-
     /**
-     * Permitir el acceso al label para así colocar un nuevo tip distinto
-     * cada vez que se abra la aplicación
-     * @return el label de los tips 
+     * Permite acceder al label de tips para modificar su contenido
+     * dinámicamente.
+     *
+     * Este método es útil si se desea mostrar un tip diferente cada vez que el
+     * usuario abra la aplicación.
+     *
+     * @return JLabel donde se muestran los tips informativos.
      */
-    public JLabel getlTips(){
+    public JLabel getlTips() {
         return lTips;
     }
 
+    /**
+     * Método generado automáticamente por el editor de formularios. Inicializa
+     * y organiza los componentes gráficos dentro del panel.
+     *
+     */
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,37 +62,59 @@ public class PanelInicio extends javax.swing.JPanel {
         lTextoExtra = new javax.swing.JLabel();
         lLogo = new javax.swing.JLabel();
         lTips = new javax.swing.JLabel();
-        lGif = new javax.swing.JLabel();
-
-        bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lTitulo.setBackground(new java.awt.Color(102, 255, 102));
         lTitulo.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
         lTitulo.setForeground(new java.awt.Color(2, 68, 129));
         lTitulo.setText("Fauna Freaks");
-        bg.add(lTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 44, -1, -1));
 
         lTextoExtra.setBackground(new java.awt.Color(2, 160, 225));
         lTextoExtra.setFont(new java.awt.Font("SansSerif", 2, 14)); // NOI18N
         lTextoExtra.setForeground(new java.awt.Color(0, 159, 224));
         lTextoExtra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lTextoExtra.setText("<html><center>Administra y consulta tus mascotas exóticas<br>de manera rápida y organizada.</center></html>");
-        bg.add(lTextoExtra, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 323, -1));
 
         lLogo.setBackground(new java.awt.Color(102, 102, 0));
-        lLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Adobe Express - file.png"))); // NOI18N
+        lLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
         lLogo.setText("jLabel3");
-        bg.add(lLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 180, 180));
 
         lTips.setFont(new java.awt.Font("SansSerif", 2, 18)); // NOI18N
-        bg.add(lTips, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 370, 220));
 
-        lGif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/placeholder.gif"))); // NOI18N
-        lGif.setText("jLabel3");
-        lGif.setMaximumSize(new java.awt.Dimension(450, 249));
-        lGif.setMinimumSize(new java.awt.Dimension(450, 249));
-        lGif.setPreferredSize(new java.awt.Dimension(450, 249));
-        bg.add(lGif, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 210, 350, 400));
+        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
+        bg.setLayout(bgLayout);
+        bgLayout.setHorizontalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bgLayout.createSequentialGroup()
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lTitulo)
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(lTextoExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(23, 23, 23)
+                        .addComponent(lLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(lTips, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(250, 250, 250))
+        );
+        bgLayout.setVerticalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bgLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(lTitulo)
+                        .addGap(13, 13, 13)
+                        .addComponent(lTextoExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lLogo))
+                .addGap(30, 30, 30)
+                .addComponent(lTips, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(160, 160, 160))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -94,7 +131,6 @@ public class PanelInicio extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
-    private javax.swing.JLabel lGif;
     private javax.swing.JLabel lLogo;
     private javax.swing.JLabel lTextoExtra;
     private javax.swing.JLabel lTips;

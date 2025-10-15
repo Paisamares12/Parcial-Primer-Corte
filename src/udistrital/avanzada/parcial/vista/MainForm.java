@@ -1,82 +1,169 @@
 package udistrital.avanzada.parcial.vista;
 
-import javax.swing.JPanel;
-import net.miginfocom.swing.MigLayout;
+import java.awt.CardLayout;
 
 /**
- * Clase MainForm es el panel principal de la ventana principal del proyecto
+ * Clase {@code MainForm} representa el panel principal de la aplicación.
+ *
+ * <p>
+ * Este panel funciona como un contenedor que administra las diferentes vistas o
+ * secciones del programa (Inicio, Adicionar, Consultar, Eliminar y Modificar)
+ * utilizando un {@link java.awt.CardLayout}. De esta manera, solo se muestra un
+ * panel a la vez y se puede cambiar fácilmente entre ellos.</p>
+ *
+ * <p>
+ * El uso de {@code CardLayout} permite una navegación sencilla y ordenada
+ * dentro de la interfaz gráfica, eliminando la necesidad de layouts externos
+ * como MigLayout.</p>
  *
  * @author Paula Martínez
- * @version 1.0
+ * @version 5.0
  * @since 2025-10-10
  */
 public class MainForm extends javax.swing.JPanel {
 
-    private PanelAdicionar adicionar;
-    private PanelConsultar consultar;
-    private PanelEliminar eliminar;
-    private PanelModificar modificar;
+    /**
+     * Panel que muestra la vista de inicio.
+     */
     private PanelInicio inicio;
 
+    /**
+     * Panel que permite adicionar nuevas mascotas.
+     */
+    private PanelAdicionar adicionar;
+
+    /**
+     * Panel que permite consultar mascotas registradas.
+     */
+    private PanelConsultar consultar;
+
+    /**
+     * Panel que permite eliminar mascotas.
+     */
+    private PanelEliminar eliminar;
+
+    /**
+     * Panel que permite modificar los datos de una mascota existente.
+     */
+    private PanelModificar modificar;
+
+    /**
+     * Layout que controla qué panel se muestra actualmente.
+     */
+    private CardLayout layout;
+
+    /**
+     * Constructor de la clase {@code MainForm}.
+     *
+     * <p>
+     * Inicializa el layout principal como {@code CardLayout}, crea las
+     * instancias de todos los subpaneles y muestra el panel de inicio por
+     * defecto.</p>
+     */
     public MainForm() {
-        setLayout(new MigLayout("fill"));
+        layout = new CardLayout(); // Se usa CardLayout para manejar las "pantallas"
+        setLayout(layout);
         initPanels();
-        mostrarPanelInicio();
+        mostrarPanelInicio(); // Muestra el panel de inicio al abrir la aplicación
     }
 
-    public void mostrarPanelInicio() {
-        removeAll();
-        add(inicio, "grow");
-        revalidate();
-        repaint();
-    }
-    public void mostrarPanelAdicionar() {
-        removeAll();
-        add(adicionar, "grow");
-        revalidate();
-        repaint();
-    }
-    public void mostrarPanelConsultar() {
-        removeAll();
-        add(consultar, "grow");
-        revalidate();
-        repaint();
-    }
-    public void mostrarPanelEliminar() {
-        removeAll();
-        add(eliminar, "grow");
-        revalidate();
-        repaint();
-    }
-    public void mostrarPanelModificar() {
-        removeAll();
-        add(modificar, "grow");
-        revalidate();
-        repaint();
-    }
-    
+    /**
+     * Inicializa los diferentes subpaneles del formulario principal y los añade
+     * al {@code CardLayout} con un nombre identificador.
+     */
     private void initPanels() {
         inicio = new PanelInicio();
         adicionar = new PanelAdicionar();
         consultar = new PanelConsultar();
         eliminar = new PanelEliminar();
         modificar = new PanelModificar();
+        
+        // Se añaden al contenedor con un identificador único
+        add(inicio, "Inicio");
+        add(adicionar, "Adicionar");
+        add(consultar, "Consultar");
+        add(eliminar, "Eliminar");
+        add(modificar, "Modificar");
     }
 
+    // ---------------- MÉTODOS PARA MOSTRAR LOS PANELES ----------------
+    /**
+     * Muestra el panel de inicio.
+     */
+    public void mostrarPanelInicio() {
+        layout.show(this, "Inicio");
+    }
+
+    /**
+     * Muestra el panel para adicionar una nueva mascota.
+     */
+    public void mostrarPanelAdicionar() {
+        layout.show(this, "Adicionar");
+    }
+
+    /**
+     * Muestra el panel de consulta de mascotas.
+     */
+    public void mostrarPanelConsultar() {
+        layout.show(this, "Consultar");
+    }
+
+    /**
+     * Muestra el panel de eliminación de mascotas.
+     */
+    public void mostrarPanelEliminar() {
+        layout.show(this, "Eliminar");
+    }
+
+    /**
+     * Muestra el panel para modificar la información de una mascota.
+     */
+    public void mostrarPanelModificar() {
+        layout.show(this, "Modificar");
+    }
+
+    // ---------------- MÉTODOS GETTERS ----------------
+    /**
+     * Obtiene el panel de adición.
+     *
+     * @return instancia de {@link PanelAdicionar}
+     */
     public PanelAdicionar getPanelAdicionar() {
         return adicionar;
     }
 
+    /**
+     * Obtiene el panel de consulta.
+     *
+     * @return instancia de {@link PanelConsultar}
+     */
     public PanelConsultar getPanelConsultar() {
         return consultar;
     }
 
+    /**
+     * Obtiene el panel de inicio.
+     *
+     * @return instancia de {@link PanelInicio}
+     */
     public PanelInicio getPanelInicio() {
         return inicio;
     }
+
+    /**
+     * Obtiene el panel de eliminación.
+     *
+     * @return instancia de {@link PanelEliminar}
+     */
     public PanelEliminar getPanelEliminar() {
         return eliminar;
     }
+
+    /**
+     * Obtiene el panel de modificación.
+     *
+     * @return instancia de {@link PanelModificar}
+     */
     public PanelModificar getPanelModificar() {
         return modificar;
     }

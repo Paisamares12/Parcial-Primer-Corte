@@ -3,24 +3,41 @@ package udistrital.avanzada.parcial.vista;
 import javax.swing.JButton;
 
 /**
- * JPanel Menu es el Menu de la ventana principal del proyecto
+ * Clase {@code Menu} representa el panel lateral de navegación de la ventana
+ * principal del proyecto.
+ *
+ * <p>
+ * Este menú contiene los botones principales que permiten al usuario acceder a
+ * las diferentes secciones del sistema: Inicio, Adicionar, Consultar, Eliminar,
+ * Modificar, Limpiar y Salir. Cada botón puede ser escuchado desde el
+ * controlador para realizar la acción correspondiente.</p>
+ *
+ * <p>
+ * Su diseño visual mantiene la coherencia de la interfaz gráfica, con un fondo
+ * azul institucional y botones blancos, distribuidos verticalmente.</p>
  *
  * @author Paula Martínez
- * @version 1.0
+ * @version 5.0
  * @since 2025-10-10
  */
 public class Menu extends javax.swing.JPanel {
+
     /**
-     * Constructor del panel menu
+     * Constructor del panel {@code Menu}.
+     *
+     * <p>
+     * Inicializa los componentes gráficos del panel (botones y diseño). Este
+     * panel actúa como el menú lateral del sistema.</p>
      */
     public Menu() {
         initComponents();
     }
-    
-        /**
+
+    // ---------------- MÉTODOS GETTERS ----------------
+    /**
      * Obtiene el botón que permite adicionar una nueva mascota o registro.
-     * 
-     * @return el botón de adicionar
+     *
+     * @return el botón {@code Adicionar}
      */
     public JButton getBotonAdicionar() {
         return botonAdicionar;
@@ -28,8 +45,8 @@ public class Menu extends javax.swing.JPanel {
 
     /**
      * Obtiene el botón que permite consultar las mascotas registradas.
-     * 
-     * @return el botón de consultar
+     *
+     * @return el botón {@code Consultar}
      */
     public JButton getBotonConsultar() {
         return botonConsultar;
@@ -37,8 +54,8 @@ public class Menu extends javax.swing.JPanel {
 
     /**
      * Obtiene el botón que permite eliminar una mascota del registro.
-     * 
-     * @return el botón de eliminar
+     *
+     * @return el botón {@code Eliminar}
      */
     public JButton getBotonEliminar() {
         return botonEliminar;
@@ -46,26 +63,27 @@ public class Menu extends javax.swing.JPanel {
 
     /**
      * Obtiene el botón que redirige al panel o vista de inicio.
-     * 
-     * @return el botón de inicio
+     *
+     * @return el botón {@code Inicio}
      */
     public JButton getBotonInicio() {
         return botonInicio;
     }
 
     /**
-     * Obtiene el botón que permite limpiar los campos del formulario.
-     * 
-     * @return el botón de limpiar
+     * Obtiene el botón que permite limpiar los campos del formulario activo.
+     *
+     * @return el botón {@code Limpiar}
      */
     public JButton getBotonLimpiar() {
         return botonLimpiar;
     }
 
     /**
-     * Obtiene el botón que permite modificar los datos de una mascota existente.
-     * 
-     * @return el botón de modificar
+     * Obtiene el botón que permite modificar los datos de una mascota
+     * existente.
+     *
+     * @return el botón {@code Modificar}
      */
     public JButton getBotonModificar() {
         return botonModificar;
@@ -73,15 +91,14 @@ public class Menu extends javax.swing.JPanel {
 
     /**
      * Obtiene el botón que permite cerrar la aplicación o salir del sistema.
-     * 
-     * @return el botón de salir
+     *
+     * @return el botón {@code Salir}
      */
     public JButton getBotonSalir() {
         return botonSalir;
     }
-
-
-
+    
+    // ---------------- CÓDIGO GENERADO AUTOMÁTICAMENTE POR EL FORM EDITOR ----------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -95,7 +112,6 @@ public class Menu extends javax.swing.JPanel {
         botonSalir = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(2, 68, 129));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         botonInicio.setBackground(new java.awt.Color(2, 68, 129));
         botonInicio.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -103,7 +119,6 @@ public class Menu extends javax.swing.JPanel {
         botonInicio.setText("Inicio\n");
         botonInicio.setToolTipText("");
         botonInicio.setBorder(null);
-        add(botonInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 230, 70));
 
         botonAdicionar.setBackground(new java.awt.Color(2, 68, 129));
         botonAdicionar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -111,7 +126,6 @@ public class Menu extends javax.swing.JPanel {
         botonAdicionar.setText("Adicionar");
         botonAdicionar.setToolTipText("");
         botonAdicionar.setBorder(null);
-        add(botonAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, 70));
 
         botonConsultar.setBackground(new java.awt.Color(2, 68, 129));
         botonConsultar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -119,7 +133,6 @@ public class Menu extends javax.swing.JPanel {
         botonConsultar.setText("Consultar");
         botonConsultar.setToolTipText("");
         botonConsultar.setBorder(null);
-        add(botonConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 230, 70));
 
         botonEliminar.setBackground(new java.awt.Color(2, 68, 129));
         botonEliminar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -127,7 +140,6 @@ public class Menu extends javax.swing.JPanel {
         botonEliminar.setText("Eliminar");
         botonEliminar.setToolTipText("");
         botonEliminar.setBorder(null);
-        add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 230, 70));
 
         botonModificar.setBackground(new java.awt.Color(2, 68, 129));
         botonModificar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -135,7 +147,6 @@ public class Menu extends javax.swing.JPanel {
         botonModificar.setText("Modificar");
         botonModificar.setToolTipText("");
         botonModificar.setBorder(null);
-        add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 230, 70));
 
         botonLimpiar.setBackground(new java.awt.Color(2, 68, 129));
         botonLimpiar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -143,7 +154,6 @@ public class Menu extends javax.swing.JPanel {
         botonLimpiar.setText("Limpiar");
         botonLimpiar.setToolTipText("");
         botonLimpiar.setBorder(null);
-        add(botonLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 230, 70));
 
         botonSalir.setBackground(new java.awt.Color(2, 68, 129));
         botonSalir.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -151,7 +161,38 @@ public class Menu extends javax.swing.JPanel {
         botonSalir.setText("Salir");
         botonSalir.setToolTipText("");
         botonSalir.setBorder(null);
-        add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 230, 70));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(botonAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(botonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(botonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(botonInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(botonAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(botonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 

@@ -1,73 +1,106 @@
 package udistrital.avanzada.parcial.vista;
 
-import java.awt.Image;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import udistrital.avanzada.parcial.control.ControlInterfaz;
-
-import net.miginfocom.swing.MigLayout;
 
 
 /**
- * Clase VentanaPrincipal es la ventana principal del proyecto
+ * Clase {@code VentanaPrincipal} representa la ventana principal del proyecto.
  *
- * @author Paula Martínez
- * @version 1.0
+ * <p>
+ * Esta clase actúa como contenedor principal de la interfaz gráfica. Combina un
+ * panel de menú lateral, una barra de encabezado (header) y el área principal
+ * donde se muestran los contenidos (main form). Usa el administrador de diseño
+ * {@link MigLayout} para distribuir los componentes.</p>
+ *
+ * <p>
+ * La clase también permite acceder a los paneles de menú y contenido principal
+ * desde otras clases del proyecto, facilitando la comunicación entre
+ * componentes.</p>
+ *
+ * @author Paula
+ * @version 4.0
  * @since 2025-10-09
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    /**
+     * Controlador que gestiona la lógica de interacción con la interfaz.
+     */
     private ControlInterfaz cInterfaz;
-    
-    private MigLayout layout;
+
+    /**
+     * Panel lateral que contiene las opciones del menú principal.
+     */
     private Menu menu;
-    private Header header;
+
+    /**
+     * Panel principal donde se mostrará el contenido dinámico según la opción
+     * seleccionada.
+     */
     private MainForm main;
-    
+
+    /**
+     * Constructor de la clase {@code VentanaPrincipal}.
+     *
+     * <p>
+     * Inicializa los componentes gráficos y configura la estructura principal
+     * de la interfaz de usuario.</p>
+     *
+     * @param cInterfaz instancia del controlador que coordina la interacción
+     * con la interfaz.
+     */
     public VentanaPrincipal(ControlInterfaz cInterfaz) {
-        initComponents();
-        init();
+        initComponents(); // Método generado por NetBeans que crea los elementos básicos de la GUI
+        init();            // Método personalizado que organiza los componentes visuales
     }
 
-    private void init(){
-        layout = new MigLayout("fill", "0[]0[100%,fill]0", "0[fill,top]0");
-        bg.setLayout(layout);
+    /**
+     * Método personalizado para inicializar la estructura y disposición de los
+     * componentes.
+     *
+     * <p>
+     * Aquí se establece el diseño con {@code nullLayout}, se crean los paneles
+     * del menú y del contenido principal, y se añaden a la ventana con las
+     * restricciones adecuadas para mantener la organización visual.</p>
+     */
+    private void init() {
+        bg.setLayout(null);
+
         menu = new Menu();
-        header = new Header();
         main = new MainForm();
-        bg.add(menu,"w 230!, spany 2");
-        bg.add(header, "h 50!, wrap");
-        bg.add(main, "w 100%, h 100%");
-        setContentPane(bg); 
-        this.setLocationRelativeTo(null);
+
+        menu.setBounds(0, 50, 230, 700);
+        header.setBounds(0, 0, 1200, 50);
+        main.setBounds(230, 50, 970, 700);
+
+        bg.add(menu);
+        bg.add(header);
+        bg.add(main);
+
+        setContentPane(bg);
+        setLocationRelativeTo(null);
     }
+
     /**
      * Permite acceder al panel de menú desde otras clases.
-     * @return el panel de menú que contiene los botones principales
+     *
+     * @return el panel {@link Menu} que contiene los botones y opciones
+     * principales.
      */
     public Menu getPanelMenu() {
         return menu;
     }
+
     /**
-     * Permite acceder al panel de menú desde otras clases.
-     * @return el panel de menú que contiene los botones principales
+     * Permite acceder al panel principal desde otras clases.
+     *
+     * @return el panel {@link MainForm} donde se muestran los contenidos
+     * dinámicos.
      */
     public MainForm getPanelMain() {
         return main;
     }
-    
-    private void SetImageLabel(JLabel labelName, String root){
-        ImageIcon image = new ImageIcon(root);
-        Icon icon = new ImageIcon(
-                image.getImage().getScaledInstance(labelName.getWidth(),
-                        labelName.getHeight(), Image.SCALE_DEFAULT)
-        );
-        labelName.setIcon(icon);
-        this.repaint();
-        
-    }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,20 +111,38 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         bg = new javax.swing.JPanel();
+        header = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bg.setOpaque(false);
 
+        header.setBackground(new java.awt.Color(0, 159, 224));
+
+        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
+        header.setLayout(headerLayout);
+        headerLayout.setHorizontalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1200, Short.MAX_VALUE)
+        );
+        headerLayout.setVerticalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1200, Short.MAX_VALUE)
+            .addGroup(bgLayout.createSequentialGroup()
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(bgLayout.createSequentialGroup()
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 750, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,5 +161,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
+    private javax.swing.JPanel header;
     // End of variables declaration//GEN-END:variables
 }
